@@ -2,13 +2,15 @@
   <div>
     <GChart type="PieChart" :data="chartData" :options="chartOptions" id = "chart"/>
     <p>Total Value of Shares: ${{totalValue}}</p>
+    <breakdown :totalValue="totalValue" :clientStocks="clientStocks"/>
   </div>
 </template>
 
 <script>
 
-import PortfiloService from '../../services/PortfiloService';
-import { eventBus } from '../../main';
+import PortfiloService from '../../services/PortfiloService.js';
+import Breakdown from './Breakdown.vue'
+import { eventBus } from '../../main.js';
 
 export default {
   name: "total-value",
@@ -41,10 +43,13 @@ export default {
     totalValue(){
       let total = 0
       for (const stock of this.clientStocks){
-        total += stock.purchasePrice // Replace with Prop Later
+        total += (stock.purchasePrice * stock.volumeOfStocks)// Replace with Prop Later
       }
       return total
     }
+  },
+  components: {
+    "breakdown": Breakdown
   }
 
 }
