@@ -4,6 +4,7 @@
 
 <script>
 import TotalValue from './components/left_panel/TotalValue.vue'
+import Header from './components/Header.vue'
 export default {
   name: "app",
   data() {
@@ -21,7 +22,8 @@ export default {
 
   },
   components: {
-    "total-value": TotalValue
+    "total-value": TotalValue,
+    "marquee-header": Header
   }
 }
 </script>
