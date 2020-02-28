@@ -3,7 +3,26 @@
 </template>
 
 <script>
+import TotalValue from './components/left_panel/TotalValue.vue'
 export default {
+  name: "app",
+  data() {
+    return {
+
+    }
+  },
+  methods: {
+
+  },
+  computed: {
+
+  },
+  mounted(){
+
+  },
+  components: {
+    "total-value": TotalValue
+  }
 }
 </script>
 
