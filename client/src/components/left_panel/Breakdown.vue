@@ -8,11 +8,11 @@
     </tr>
     <tr v-for="stock in clientStocks">
       <td>{{stock.companyName}}</td>
-      <td>{{getPercentageTotalValue(stock)}}</td>
+      <td>{{getPercentageTotalValue(stock)}}%</td>
       <td>{{stock.volumeOfStocks}}</td>
-      <td style="color:red" v-if="stock.purchasePrice < 380.42">⬇</td> <!--  need to replace with api data -->
-      <td style="color:green" v-if="stock.purchasePrice > 380.42">⬆</td>
-      <td v-if="stock.purchasePrice === 380.42">-</td>
+      <td style="color:red" v-if="stock.purchasePrice > getStockPrice(stock)">⬇</td> <!--  need to replace with api data -->
+      <td style="color:green" v-if="stock.purchasePrice < getStockPrice(stock)">⬆</td>
+      <td v-if="stock.purchasePrice === getStockPrice(stock)">-</td>
     </tr>
   </table>
 </template>
@@ -25,10 +25,25 @@ export default {
 
     }
   },
-  props: ["clientStocks", "totalValue"],
+  props: ["clientStocks", "totalValue", "stocks"],
   methods: {
-    getPercentageTotalValue(stock){
-      return (((stock.volumeOfStocks * stock.purchasePrice) / this.totalValue)*100).toFixed(2)
+    getPercentageTotalValue(currentStock){
+      let stockPrice = 0
+      for (const stock of this.stocks){
+        if (currentStock.ticker === stock.symbol){
+          stockPrice = stock.profile.price
+        }
+      }
+      return (((currentStock.volumeOfStocks * stockPrice) / this.totalValue)*100).toFixed(0)
+    },
+    getStockPrice(currentStock){
+      let stockPrice = 0
+      for (const stock of this.stocks){
+        if (currentStock.ticker === stock.symbol){
+          stockPrice = stock.profile.price
+        }
+      }
+      return stockPrice
     }
 
   },
