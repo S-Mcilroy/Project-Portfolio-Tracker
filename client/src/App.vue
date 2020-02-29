@@ -4,6 +4,8 @@
 
 <script>
 import TotalValue from './components/left_panel/TotalValue.vue'
+import TopPerforming from './components/right_panel/TopPerforming.vue'
+import BottomPerforming from './components/right_panel/BottomPerforming.vue'
 import Header from './components/Header.vue'
 export default {
   name: "app",
@@ -23,7 +25,9 @@ export default {
   },
   components: {
     "total-value": TotalValue,
-    "marquee-header": Header
+    "marquee-header": Header,
+    "top-performing": TopPerforming,
+    "bottom-performing": BottomPerforming
   }
 }
 </script>

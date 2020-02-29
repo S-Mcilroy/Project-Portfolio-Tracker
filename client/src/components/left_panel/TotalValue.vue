@@ -8,7 +8,7 @@
 
 <script>
 
-import PortfiloService from '../../services/PortfiloService.js';
+import PortfolioService from '../../services/PortfolioService.js';
 import Breakdown from './Breakdown.vue'
 import { eventBus } from '../../main.js';
 
@@ -24,7 +24,7 @@ export default {
   },
   methods: {
     fetchData(){
-      PortfiloService.getStocks()
+      PortfolioService.getStocks()
       .then(stocks => {this.clientStocks = stocks,
       this.sortData()});
 
