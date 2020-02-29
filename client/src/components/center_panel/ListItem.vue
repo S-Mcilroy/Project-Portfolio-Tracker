@@ -19,7 +19,7 @@
 
 <script>
 
-import PortfolioService from '../../services/PortfiloService';
+import PortfolioService from '../../services/PortfolioService.js';
 // import { eventBus } from '../main';
 
 

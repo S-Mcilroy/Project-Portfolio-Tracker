@@ -2,7 +2,7 @@
   <div>
     <GChart type="PieChart" :data="chartData" :options="chartOptions" id = "chart"/>
     <p>Total Value of Shares: ${{totalValue}}</p>
-    <breakdown :totalValue="totalValue" :clientStocks="clientStocks"/>
+    <breakdown :totalValue="totalValue" :stocks="stocks" :clientStocks="clientStocks"/>
   </div>
 </template>
 
@@ -16,36 +16,30 @@ export default {
   name: "total-value",
   data(){
     return {
-      clientStocks: [],
-      chartData: [],
       chartOptions: {
-      }
+      },
     }
   },
+  props: ["stocks", "clientStocks", "chartData"],
   methods: {
-    fetchData(){
-      PortfolioService.getStocks()
-      .then(stocks => {this.clientStocks = stocks,
-      this.sortData()});
 
-    },
-    sortData(){
-      this.chartData.push(["Shares", "Current Value"])
-      for (const stock of this.clientStocks){
-        this.chartData.push([stock.companyName, stock.purchasePrice])
-      }
-    }
   },
   mounted() {
-    this.fetchData();
+
   },
   computed: {
     totalValue(){
       let total = 0
-      for (const stock of this.clientStocks){
-        total += (stock.purchasePrice * stock.volumeOfStocks)// Replace with Prop Later
+      for (const clientStock of this.clientStocks){
+        let stockPrice = 0
+        for (const stock of this.stocks){
+          if (clientStock.ticker === stock.symbol){
+            stockPrice = stock.profile.price
+          }
+        }
+        total += (clientStock.volumeOfStocks * stockPrice)
       }
-      return total
+      return total.toFixed(2);
     }
   },
   components: {

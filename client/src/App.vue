@@ -1,5 +1,9 @@
 <template lang="html">
-
+  <div>
+    <!-- <search/>
+    <list-view :stocks="stocks"/>
+    <total-value v-if="stocks" :chartData="chartData" :clientStocks="clientStocks" :stocks="stocks"/> -->
+  </div>
 </template>
 
 <script>
@@ -9,6 +13,7 @@ import TotalValue from './components/left_panel/TotalValue.vue'
 import TopPerforming from './components/right_panel/TopPerforming.vue'
 import BottomPerforming from './components/right_panel/BottomPerforming.vue'
 import Header from './components/Header.vue'
+import PortfolioService from './services/PortfolioService.js';
 import {eventBus} from './main.js';
 
 export default {
@@ -16,53 +21,77 @@ export default {
   data () {
     return {
       stocks: [],
-      allSelectedSymbols: []
+      allSelectedSymbols: [],
+      clientStocks: [],
+      chartData: [["Shares", "Current Value"]],
+      chartDataChecker: []
     };
   },
 
 
   methods: {
+    fetchData(){
+      PortfolioService.getStocks()
+      .then(stocks => {this.clientStocks = stocks,
+        this.updateSymbols()})
+      },
+
+      updateSymbols(){
+        for (const stock of this.clientStocks){
+          this.allSelectedSymbols.push(stock.ticker)
+        };
+        this.getStockDetails();
+      },
+
+      sortData(){
+        for (const stock of this.stocks){
+          for (const clientStock of this.clientStocks)
+          if (stock.symbol === clientStock.ticker && !this.chartDataChecker.includes(clientStock.ticker)){
+            this.chartData.push([clientStock.companyName, stock.profile.price])
+            this.chartDataChecker.push(clientStock.ticker)
+          }
+        }
+      },
 
 
-    getStockDetails: function() {
+      getStockDetails: function() {
 
-      const arrayOfSymbolsFromSearchBar = this.allSelectedSymbols
-      const promises = arrayOfSymbolsFromSearchBar.map(num => {
-        return fetch(
-          `https://financialmodelingprep.com/api/v3/company/profile/${num}`
-        ).then(res => res.json());
-      });
+        const arrayOfSymbolsFromSearchBar = this.allSelectedSymbols
+        const promises = arrayOfSymbolsFromSearchBar.map(num => {
+          return fetch(
+            `https://financialmodelingprep.com/api/v3/company/profile/${num}`
+          ).then(res => res.json());
+        });
 
-      Promise.all(promises)
-      .then(data => {
-        const stockData = data.reduce(
-          (flat, toFlatten) => flat.concat(toFlatten),
-          []
-        );
-        stockData.forEach(stock => (stock));
-        this.stocks = stockData;
-      })
+        Promise.all(promises)
+        .then(data => {
+          const stockData = data.reduce(
+            (flat, toFlatten) => flat.concat(toFlatten),
+            []
+          );
+          stockData.forEach(stock => (stock));
+          this.stocks = stockData;
+          this.sortData();
+        })
+      }
+    },
+    mounted() {
+      this.fetchData()
+      eventBus.$on("symbol-added", allSelectedSymbols => {this.allSelectedSymbols.push(allSelectedSymbols.toString()),
+        this.getStockDetails()});
+
+      },
+      components: {
+        'search': Search,
+        'list-view': ListView,
+        "total-value": TotalValue,
+        "marquee-header": Header,
+        "top-performing": TopPerforming,
+        "bottom-performing": BottomPerforming
+      }
     }
 
-  },
-
-  mounted() {
-    eventBus.$on("symbol-added", allSelectedSymbols => {this.allSelectedSymbols = allSelectedSymbols,
-      this.getStockDetails()});
-    },
+    </script>
 
 
-    components: {
-      'search': Search,
-      'list-view': ListView,
-      "total-value": TotalValue,
-      "marquee-header": Header,
-      "top-performing": TopPerforming,
-      "bottom-performing": BottomPerforming
-    },
-  }
-
-  </script>
-
-
-  <style lang="css" scoped>
+    <style lang="css" scoped>

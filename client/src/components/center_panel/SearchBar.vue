@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import PortfiloService from '../../services/PortfiloService.js';
+import PortfolioService from '../../services/PortfolioService.js';
 import { eventBus } from '../../main';
 
 export default {
@@ -52,7 +52,7 @@ export default {
     },
     addToAllSelectedSymbols: function(selectedStockSymbol) {
       this.allSelectedSymbols.push(selectedStockSymbol),
-      this.symbolArray();
+      this.symbolArray(selectedStockSymbol);
     },
 
     handleSubmit(e){
@@ -60,8 +60,8 @@ export default {
         this.addToAllSelectedSymbols(this.selectedStockInput.symbol);
       },
 
-      symbolArray: function() {
-            eventBus.$emit("symbol-added", this.allSelectedSymbols);
+      symbolArray: function(symbol) {
+            eventBus.$emit("symbol-added", symbol);
           }
 
 
