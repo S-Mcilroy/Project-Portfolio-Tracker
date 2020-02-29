@@ -31,58 +31,6 @@ export default {
 
 
   methods: {
-<<<<<<< HEAD
-
-
-    getStockDetails: function() {
-
-      const arrayOfSymbolsFromSearchBar = this.allSelectedSymbols
-      const promises = arrayOfSymbolsFromSearchBar.map(num => {
-        return fetch(
-          `https://financialmodelingprep.com/api/v3/company/profile/${num}`
-        ).then(res => res.json());
-      });
-
-      Promise.all(promises)
-      .then(data => {
-        const stockData = data.reduce(
-          (flat, toFlatten) => flat.concat(toFlatten),
-          []
-        );
-        stockData.forEach(stock => (stock));
-        this.stocks = stockData;
-      })
-    },
-
-    // markFavourite: function(beer) {
-    //   const index = this.beers.indexOf(beer);
-    //   this.beers[index].isFavourite = true;
-    // },
-    // unmarkFavourite: function(beer) {
-    //   const index = this.beers.indexOf(beer);
-    //   this.beers[index].isFavourite = false;
-    // }
-  },
-
-
-  mounted() {
-    eventBus.$on("symbol-added", allSelectedSymbols => {this.allSelectedSymbols = allSelectedSymbols,
-      this.getStockDetails()});
-
-      // eventBus.$on("favourite-added", beer => this.markFavourite(beer));
-      //
-      // eventBus.$on("favourite-removed", beer => this.unmarkFavourite(beer));
-    },
-
-
-    components: {
-      'search': Search,
-      'list-view': ListView,
-      "total-value": TotalValue,
-      "marquee-header": Header,
-      "top-performing": TopPerforming,
-      "bottom-performing": BottomPerforming
-=======
     fetchData(){
       PortfolioService.getStocks()
       .then(stocks => {this.clientStocks = stocks,
@@ -127,7 +75,6 @@ export default {
           this.sortData();
         })
       }
->>>>>>> develop
     },
     mounted() {
       this.fetchData()
@@ -147,7 +94,5 @@ export default {
     }
 
     </script>
-
->>>>>>> develop
 
     <style lang="css" scoped>
