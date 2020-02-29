@@ -11,6 +11,9 @@
       <li>Sector: {{stock.profile.sector}}</li>
       <li>Exchange: {{stock.profile.exchange}}</li>
     </ul>
+
+    <button v-on:click="addToPortfolio">Add to Portfolio</button>
+    <!-- <button v-on:click="removeFromPortfolio">Remove from Portfolio</button> -->
 <hr>
 
   </div>
@@ -19,7 +22,7 @@
 
 <script>
 
-import PortfolioService from '../../services/PortfiloService';
+import PortfolioService from '../../services/PortfolioService';
 // import { eventBus } from '../main';
 
 
@@ -28,28 +31,25 @@ export default {
   props: ['stock'],
 
   methods: {
-    // deleteStock(){
-    //   PortfolioService.deleteStock(this.stock._id)
-    //   .then(() => eventBus.$emit('stock-deleted', this.stock._id))
-    // }
+  addToPortfolio(e){
+          e.preventDefault()
+          const game = {
+            name: this.stock.profile.companyName,
+            ticker: this.stock.symbol,
+            volumeOfStocks: 44,
+            purchasePrice: this.stock.profile.price
+          }
+          PortfolioService.postStock(game)
+        },
+
+  // removeFromPortfolio(){
+  //     PortfolioService.deleteStock(this.stock._id)
+
+    }
   }
-}
+
 </script>
 
 <style lang="css" scoped>
-.sighting {
-	width: 30%;
-	background: rgba(255, 255, 255, 0.7);
-	margin-bottom: 20px;
-	padding: 25px;
-}
 
-button {
-	color: #fff;
-	border: none;
-	font-size: 18px;
-	padding: 10px;
-	margin-top: 10px;
-	background: #F55536;
-}
 </style>

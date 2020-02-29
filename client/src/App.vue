@@ -1,5 +1,10 @@
 <template lang="html">
+<div class="app">
+  <search></search>
+  <list-view :stocks="stocks"></list-view>
+  <total-value :stocks="stocks"></total-value>
 
+</div>
 </template>
 
 <script>
@@ -42,13 +47,26 @@ export default {
         stockData.forEach(stock => (stock));
         this.stocks = stockData;
       })
-    }
+    },
 
+    // markFavourite: function(beer) {
+    //   const index = this.beers.indexOf(beer);
+    //   this.beers[index].isFavourite = true;
+    // },
+    // unmarkFavourite: function(beer) {
+    //   const index = this.beers.indexOf(beer);
+    //   this.beers[index].isFavourite = false;
+    // }
   },
+
 
   mounted() {
     eventBus.$on("symbol-added", allSelectedSymbols => {this.allSelectedSymbols = allSelectedSymbols,
       this.getStockDetails()});
+
+      // eventBus.$on("favourite-added", beer => this.markFavourite(beer));
+      //
+      // eventBus.$on("favourite-removed", beer => this.unmarkFavourite(beer));
     },
 
 

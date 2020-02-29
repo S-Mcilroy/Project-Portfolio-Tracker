@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import PortfiloService from '../../services/PortfiloService.js';
+import PortfolioService from '../../services/PortfolioService.js';
 import { eventBus } from '../../main';
 
 export default {
