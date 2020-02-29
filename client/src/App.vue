@@ -5,6 +5,10 @@
 <script>
 import Search from './components/center_panel/SearchBar.vue';
 import ListView from './components/center_panel/ListView.vue';
+import TotalValue from './components/left_panel/TotalValue.vue'
+import TopPerforming from './components/right_panel/TopPerforming.vue'
+import BottomPerforming from './components/right_panel/BottomPerforming.vue'
+import Header from './components/Header.vue'
 import {eventBus} from './main.js';
 
 export default {
@@ -50,7 +54,11 @@ export default {
 
     components: {
       'search': Search,
-      'list-view': ListView
+      'list-view': ListView,
+      "total-value": TotalValue,
+      "marquee-header": Header,
+      "top-performing": TopPerforming,
+      "bottom-performing": BottomPerforming
     },
   }
 
@@ -58,12 +66,3 @@ export default {
 
 
   <style lang="css" scoped>
-
-  div {
-
-  }
-
-  weather-footer {
-    text-align: center;
-  }
-  </style>
