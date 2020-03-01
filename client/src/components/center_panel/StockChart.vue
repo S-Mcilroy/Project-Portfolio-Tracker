@@ -38,7 +38,7 @@ export default {
         },
         series: [{
           name: 'Ticker Name here',
-          data: [1,2,4,2,8,4,16,8],//dummy data to be replaced
+          data: [],//dummy data to be replaced
           // pointStart: Date.UTC(2018, 1, 1),
           // pointInterval: 1000 * 3600 * 24,
           tooltip: {
@@ -52,10 +52,12 @@ export default {
     this.getDates(),
     this.fromDate=this.parseDates(this.weekYear,this.weekMonth,this.weekDate); //converts date to match requirements for interpolation
     this.toDate=this.parseDates(this.yesterYear,this.yesterMonth,this.yesterDate);
+    console.log(this.fromDate)
+    console.log(this.toDate)
 
     fetch(`https://financialmodelingprep.com/api/v3/historical-price-full/AAPL?from=${this.fromDate}&to=${this.toDate}`) //obtains stocks with dtae range- ticker to be modified at later date to include interpolation
     .then(res => res.json())
-    .then(data =>this.obtainedData=data["historical"])
+    .then(data =>{this.obtainedData=data["historical"],this.obtainClosePrice()});
 
     this.obtainClosePrice();
 
@@ -101,8 +103,8 @@ export default {
       return `${year}-${month}-${day}`
     },
     obtainClosePrice(){
-      for (let  of this.obtainedData){
-        this.inHolding.push(i)
+      for (let i of this.obtainedData){
+        this.options.series[0].data.push(i.close)
       }
     }
   }
