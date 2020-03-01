@@ -3,6 +3,7 @@
     <!-- <search/>
     <list-view :stocks="stocks"/>
     <total-value v-if="stocks" :chartData="chartData" :clientStocks="clientStocks" :stocks="stocks"/> -->
+    <stockChart></stockChart>
   </div>
 </template>
 

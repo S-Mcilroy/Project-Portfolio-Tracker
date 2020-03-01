@@ -9,7 +9,7 @@
     "express": "^4.17.1",
     "mongodb": "^3.5.4",
     "nodemon": "^2.0.2",
-    "highcharts":"^8.0.0"
+    "highcharts": "^8.0.0"
   },
   "devDependencies": {},
   "scripts": {
