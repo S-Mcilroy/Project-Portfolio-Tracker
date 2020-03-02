@@ -1,5 +1,20 @@
 <template lang="html">
-<div class="app">
+<div>
+
+<section id="Left">
+  <total-value :stocks="stocks" :clientStocks="clientStocks" :chartData="chartData"/>
+</section>
+
+<section id="Center">
+<search :clientStocks="clientStocks"/>
+<list-view :stocks="stocks" :clientStocks="clientStocks"/>
+</section>
+
+
+  <section id="Right">
+<top-performing/>
+<bottom-performing/>
+  </section>
 
 
 </div>
@@ -14,7 +29,6 @@ import TopPerforming from './components/right_panel/TopPerforming.vue'
 import BottomPerforming from './components/right_panel/BottomPerforming.vue'
 import Header from './components/Header.vue'
 import PortfolioService from './services/PortfolioService.js';
-import StockChart from './components/center_panel/StockChart.vue';
 import {eventBus} from './main.js';
 
 export default {
@@ -48,7 +62,7 @@ export default {
         for (const stock of this.stocks){
           for (const clientStock of this.clientStocks)
           if (stock.symbol === clientStock.ticker && !this.chartDataChecker.includes(clientStock.ticker)){
-            this.chartData.push([clientStock.companyName, stock.profile.price])
+            this.chartData.push([clientStock.name, stock.profile.price])
             this.chartDataChecker.push(clientStock.ticker)
           }
         }
@@ -89,7 +103,6 @@ export default {
         "marquee-header": Header,
         "top-performing": TopPerforming,
         "bottom-performing": BottomPerforming,
-        "stockChart":StockChart,
       }
     }
 

@@ -1,6 +1,6 @@
 <template lang="html">
   <div id='chartFrame'>
-    <highcharts class="stock" :constructor-type="stockChart" :options="options"></highcharts>
+    <highcharts class="stock" :options="options"></highcharts>
   </div>
 </template>
 
@@ -28,7 +28,7 @@ export default {
           selected: 1
         },
         title: {
-          text: 'Name of company goes here'
+          text: `${this.stock.profile.companyName}`
         },
         yAxis:{
           title:{
@@ -36,7 +36,7 @@ export default {
           }
         },
         series: [{
-          name: 'Ticker Name here',
+          name: `${this.stock.symbol}`,
           data: [],//dummy data to be replaced
           // pointStart: Date.UTC(2018, 1, 1),
           // pointInterval: 1000 * 3600 * 24,
@@ -54,7 +54,7 @@ export default {
     console.log(this.fromDate)
     console.log(this.toDate)
 
-    fetch(`https://financialmodelingprep.com/api/v3/historical-price-full/GOOGL?from=${this.fromDate}&to=${this.toDate}`) //obtains stocks with dtae range- ticker to be modified at later date to include interpolation
+    fetch(`https://financialmodelingprep.com/api/v3/historical-price-full/${this.stock.symbol}?from=${this.fromDate}&to=${this.toDate}`) //obtains stocks with dtae range- ticker to be modified at later date to include interpolation
     .then(res => res.json())
     .then(data =>{this.obtainedData=data["historical"],this.obtainClosePrice()});
 
@@ -106,7 +106,8 @@ export default {
         this.options.series[0].data.push(i.close)
       }
     }
-  }
+  },
+  props: ["stock"]
 }
 </script>
 
