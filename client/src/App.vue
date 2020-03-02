@@ -1,8 +1,8 @@
 <template lang="html">
-<div class="app">
+  <div class="app">
 
-
-</div>
+    <stockChart v-if="lastYear" :lastYear="lastYear"/>
+  </div>
 
 </template>
 
@@ -25,7 +25,8 @@ export default {
       allSelectedSymbols: [],
       clientStocks: [],
       chartData: [["Shares", "Current Value"]],
-      chartDataChecker: []
+      chartDataChecker: [],
+      lastYear: null
     };
   },
 
@@ -35,6 +36,21 @@ export default {
       PortfolioService.getStocks()
       .then(stocks => {this.clientStocks = stocks,
         this.updateSymbols()})
+      },
+
+      getLastYear(){
+        let yesterYear=new Date();
+        yesterYear.setDate(-365);
+        let yesterYearDate= yesterYear.getDate();
+        let yesterYearMonth= yesterYear.getMonth();
+        yesterYearMonth= yesterYearMonth+1;
+        let yesterYearYear= yesterYear.getFullYear();
+        this.lastYear = {
+          year: yesterYearYear,
+          month: yesterYearMonth,
+          day: yesterYearDate
+        }
+
       },
 
       updateSymbols(){
@@ -78,6 +94,7 @@ export default {
     },
     mounted() {
       this.fetchData()
+      this.getLastYear()
       eventBus.$on("symbol-added", allSelectedSymbols => {this.allSelectedSymbols.push(allSelectedSymbols.toString()),
         this.getStockDetails()});
 
