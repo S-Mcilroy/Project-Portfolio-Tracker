@@ -1,25 +1,40 @@
 <template lang="html">
- <form v-on:submit="handleSubmit"  class="" >
-   <h2>Type in Stock Symbol</h2>
-   <div class="">
-     <label for="selectedStockInput">Stock Symbol:</label>
+  <div class="">
+    <!-- <form v-on:submit="handleSubmit"  class="" >
+    <h2>Type in Stock Symbol</h2>
+    <div class="">
+    <label for="selectedStockInput">Stock Symbol:</label>
 
-     <select v-model="selectedStockInput">
-         <option disabled value="">Select a ticker...</option>
-         <option v-for="stockInput in stocksInput" :value="stockInput">{{stockInput.symbol}} - {{stockInput.name}}</option>
-       </select>
+    <select v-model="selectedStockInput">
+    <option disabled value="">Select a ticker...</option>
+    <option v-for="stockInput in stocksInput" :value="stockInput">{{stockInput.symbol}} - {{stockInput.name}}</option>
+  </select>
 
-   </div>
-   </div>
+</div>
+
 <input type="submit" name="" value="ADD">
 <hr>
 
- </form>
+</form> -->
+<form v-on:submit="handleSubmit"  class="" >
+<div  style="margin:10% 25%;">
+  <ejs-autocomplete  :autofill='false' v-model="selectedStockInput" :dataSource='dataItem' :fields='dataFields'
+  placeholder="Select stock..." popupWidth="250px" :highlight="true"
+  popupHeight="400px"></ejs-autocomplete>
+</div>
+
+<input type="submit" name="" value="ADD">
+</form>
+<hr>
+
+
+</div>
 </template>
 
 <script>
 import PortfolioService from '../../services/PortfolioService.js';
 import { eventBus } from '../../main';
+import { DataManager, WebApiAdaptor } from '@syncfusion/ej2-data'; //https://www.youtube.com/watch?v=oFZf8uFAtQE
 
 export default {
   name: 'search',
@@ -27,7 +42,9 @@ export default {
     return {
       selectedStockInput: {},
       stocksInput: [],
-      allSelectedSymbols: []
+      allSelectedSymbols: [],
+      dataItem: [],
+      dataFields: {value: 'Stock'}
 
     }
   },
@@ -37,7 +54,7 @@ export default {
     fetch('https://financialmodelingprep.com/api/v3/search?query=&exchange=NASDAQ')
     .then(res => res.json())
     .then(stocksInput => this.stocksInput = stocksInput)
-    .then(() => this.sortStocks("symbol"));
+    .then(() => {this.sortStocks("symbol"),this.allAutocompleteSuggestions()});
 
 
   },
@@ -57,15 +74,20 @@ export default {
 
     handleSubmit(e){
       e.preventDefault()
-        this.addToAllSelectedSymbols(this.selectedStockInput.symbol);
-      },
+      this.addToAllSelectedSymbols(this.selectedStockInput.split('#')[1]);
+    },
 
-      symbolArray: function(symbol) {
-            eventBus.$emit("symbol-added", symbol);
-          }
+    symbolArray: function(symbol) {
+      eventBus.$emit("symbol-added", symbol);
+    },
 
-
-
+    allAutocompleteSuggestions: function() {
+      for (const stockInput of this.stocksInput) {
+         this.dataItem.push(`${stockInput.name} #${stockInput.symbol}`)
+        //this.dataItem.push({Id: stockInput.symbol, Stock: `${stockInput.name} - ${stockInput.symbol}`})
+        // this.dataItem.push(stockInput.symbol)
+      }
+    }
   }
 
 }
@@ -76,4 +98,5 @@ export default {
 
 
 <style lang="css" scoped>
+@import url(https://cdn.syncfusion.com/ej2/material.css);
 </style>

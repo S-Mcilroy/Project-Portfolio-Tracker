@@ -1,6 +1,12 @@
 <template lang="html">
 <div class="app">
-
+  <search></search>
+      <list-view :stocks="stocks" :clientStocks="clientStocks"></list-view>
+      <total-value :chartData="chartData" :stocks="stocks" :clientStocks="clientStocks"></total-value>
+      <marquee-header></marquee-header>
+      <top-performing></top-performing>
+      <bottom-performing></bottom-performing>
+      <stockChart></stockChart>
 
 </div>
 
