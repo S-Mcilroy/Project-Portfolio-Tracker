@@ -17,7 +17,7 @@
     <button v-on:click="addToPortfolio" :stock="stock">Add to Portfolio</button>
     <button v-on:click="updatePortfolio" :stock="stock">Update to Portfolio</button>
     <button v-on:click="removeFromPortfolio" :stock="stock" :clientStocks="clientStocks" >Remove from Portfolio</button>
-    <stockChart :stock="stock"/>
+    <stockChart :lastYear="lastYear" :stock="stock"/>
     <hr>
 
   </div>
@@ -37,10 +37,25 @@ export default {
   data(){
     return {
       amount: null,
-      clientStockSymbols: []
+      clientStockSymbols: [],
+      lastYear: null
     }
   },
   methods: {
+    getLastYear(){
+      let yesterYear=new Date();
+      yesterYear.setDate(-365);
+      let yesterYearDate= yesterYear.getDate();
+      let yesterYearMonth= yesterYear.getMonth();
+      yesterYearMonth= yesterYearMonth+1;
+      let yesterYearYear= yesterYear.getFullYear();
+      this.lastYear = {
+        year: yesterYearYear,
+        month: yesterYearMonth,
+        day: yesterYearDate
+      }
+
+    },
     addToPortfolio(e){
       e.preventDefault()
       const newStock = {
@@ -88,6 +103,7 @@ export default {
   },
   mounted(){
     this.sortingClientStocks()
+    this.getLastYear()
   },
   components: {
     "stockChart":StockChart
