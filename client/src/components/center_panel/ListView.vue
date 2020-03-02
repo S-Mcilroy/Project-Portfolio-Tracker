@@ -1,6 +1,6 @@
 <template lang="html">
 	<div id="stocksList">
-		<list-item v-for="(stock, index) in stocks" :keys="index" :stock="stock" />
+		<list-item v-for="(stock, index) in stocks" :keys="index" :stock="stock" :clientStocks="clientStocks" />
 	</div>
 </template>
 
@@ -11,7 +11,7 @@ import { eventBus } from '../../main.js';
 
 export default {
 	name: "stocks-list",
-  props: ['stocks'],
+  props: ['stocks', 'clientStocks'],
 	data () {
     return {
 
