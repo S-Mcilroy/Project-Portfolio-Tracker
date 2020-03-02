@@ -18,8 +18,7 @@
 <bottom-performing/>
   </section>
 
-
-</div>
+  </div>
 
 </template>
 
@@ -41,7 +40,8 @@ export default {
       allSelectedSymbols: [],
       clientStocks: [],
       chartData: [["Shares", "Current Value"]],
-      chartDataChecker: []
+      chartDataChecker: [],
+      lastYear: null
     };
   },
 

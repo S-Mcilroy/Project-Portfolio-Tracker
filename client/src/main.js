@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
 import HighchartsVue from 'highcharts-vue'
+require('highcharts/highcharts-more')(Highcharts)
 import Highcharts from 'highcharts'
 import stockInit from 'highcharts/modules/stock'
 import VueGoogleCharts from 'vue-google-charts'

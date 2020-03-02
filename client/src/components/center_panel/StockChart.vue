@@ -15,6 +15,7 @@ export default {
       yesterday:null,
       yesterDate:null,//reciever for yesterdays date value (1-31)
       yesterMonth:null,//reciever for month from 'yesterday' value
+      yesterYearFull: null,
       yesterYear:null,//reciever for year from 'yesterday' value
       weekAgo:null,
       weekDate:null,
@@ -22,8 +23,28 @@ export default {
       weekYear:null,
       fromDate:null,
       toDate:null,
+      yesterYearYear:null,
+      yesterYearMonth: null,
+      yesterYearDate: null,
       obtainedData:[],
       options: {
+        chart:{
+          type:'arearange',
+          plotBackgroundColor: 'black',
+          plotBorderColor: '#7cfc00',
+          plotBorderWidth: 2,
+          zoomType:'xy',
+          panning:true,
+          panKey:'shift',
+          plotBackgroundColor: {
+            linearGradient: [0, 0, 0, 700],//linearGradient  start position(x1,x2,y1,y2)
+            stops: [// gradiation elements
+                [0, 'rgb(0, 0, 0)'], //start
+                [1, 'rgb(60,205,60)'], //middle
+                [2, 'rgb(50,205,50)']//end
+            ]
+        }
+        },
         rangeSelector: {
           selected: 1
         },
@@ -37,7 +58,8 @@ export default {
         },
         series: [{
           name: `${this.stock.symbol}`,
-          data: [],//dummy data to be replaced
+          data: [],
+          color: 'white',//dummy data to be replaced
           // pointStart: Date.UTC(2018, 1, 1),
           // pointInterval: 1000 * 3600 * 24,
           tooltip: {
@@ -49,19 +71,14 @@ export default {
   },
   mounted(){
     this.getDates(),
-    this.fromDate=this.parseDates(this.weekYear,this.weekMonth,this.weekDate); //converts date to match requirements for interpolation
-    this.toDate=this.parseDates(this.yesterYear,this.yesterMonth,this.yesterDate);
-    console.log(this.fromDate)
-    console.log(this.toDate)
+    this.fromDate=this.parseDates(this.yesterYearYear,this.yesterYearMonth,this.yesterYearDate); //converts date to match requirements for interpolation
+    this.toDate=this.parseDates(this.yesterYearFull,this.yesterMonth,this.yesterDate);
 
     fetch(`https://financialmodelingprep.com/api/v3/historical-price-full/${this.stock.symbol}?from=${this.fromDate}&to=${this.toDate}`) //obtains stocks with dtae range- ticker to be modified at later date to include interpolation
     .then(res => res.json())
     .then(data =>{this.obtainedData=data["historical"],this.obtainClosePrice()});
 
     this.obtainClosePrice();
-
-
-
 
 
   },
@@ -76,13 +93,21 @@ export default {
       this.yesterDate=this.yesterday.getDate();//gets date (1-31) value of new 'yesterday' date value
       this.yesterMonth=this.yesterday.getMonth();//gets month value from 'yesterday' month value
       this.yesterMonth=this.yesterMonth+1
-      this.yesterYear=this.yesterday.getFullYear();//gets year value from 'yesterday' year value
+      this.yesterYearFull=this.yesterday.getFullYear();//gets year value from 'yesterday' year value
       this.weekAgo=new Date();//sets last week as todays date for start point
       this.weekAgo.setDate(-8);//todays date -8 days (so we have 7 COMPLETE days)
       this.weekDate=this.weekAgo.getDate();//obtains date (1-31) from 'weekAgo' date value
       this.weekMonth=this.weekAgo.getMonth();//obtains month data from 'weekAgo' month value
       this.weekMonth=this.weekMonth+1;//updates month value as javascript uses 0-11 format for months
       this.weekYear=this.weekAgo.getFullYear();//obtains year data from 'weekAgo' year value
+      this.yesterYear=new Date();
+      this.yesterYear.setDate(-365);
+      this.yesterYearDate=this.yesterYear.getDate();
+      this.yesterYearMonth=this.yesterYear.getMonth();
+      this.yesterYearMonth=this.yesterYearMonth+1;
+      this.yesterYearYear=this.yesterYear.getFullYear();
+      console.log(this.parseDates(this.yesterYearYear,this.yesterYearMonth,this.yesterYearDate))
+      console.log(this.yesterYearYear,this.yesterYearMonth,this.yesterYearDate)
     },
      parseDates(year,month,day){ //this is method to convert dates into format to match URL requirements
          // day=day;
@@ -103,16 +128,15 @@ export default {
     },
     obtainClosePrice(){
       for (let i of this.obtainedData){
-        this.options.series[0].data.push(i.close)
+        this.options.series[0].data.push([i.open,i.close])
       }
     }
   },
-  props: ["stock"]
-}
+  props: ["lastYear", "stock"]}
 </script>
 
 <style lang="css" scoped>
 #chartFrame{
-  border: 2px solid blue;
+  /* border: 2px solid blue; */
 }
 </style>

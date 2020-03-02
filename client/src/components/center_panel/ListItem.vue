@@ -21,7 +21,7 @@
 
     <button v-on:click="showChart" type="button">View Chart</button>
     <button v-on:click="hideChart" type="button">Hide Chart</button>
-    <stockChart  hidden v-bind:id="classObject(stock)" :stock="stock"/>
+    <stockChart  hidden v-bind:id="classObject(stock)" :lastYear="lastYear" :stock="stock"/>
     <hr>
 
   </div>
@@ -41,10 +41,25 @@ export default {
   data(){
     return {
       amount: null,
-      clientStockSymbols: []
+      clientStockSymbols: [],
+      lastYear: null
     }
   },
   methods: {
+    getLastYear(){
+      let yesterYear=new Date();
+      yesterYear.setDate(-365);
+      let yesterYearDate= yesterYear.getDate();
+      let yesterYearMonth= yesterYear.getMonth();
+      yesterYearMonth= yesterYearMonth+1;
+      let yesterYearYear= yesterYear.getFullYear();
+      this.lastYear = {
+        year: yesterYearYear,
+        month: yesterYearMonth,
+        day: yesterYearDate
+      }
+
+    },
     addToPortfolio(e){
       e.preventDefault()
       const newStock = {
@@ -106,6 +121,7 @@ export default {
   },
   mounted(){
     this.sortingClientStocks()
+    this.getLastYear()
   },
   components: {
     "stockChart":StockChart
