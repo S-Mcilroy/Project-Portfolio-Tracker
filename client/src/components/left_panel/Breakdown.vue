@@ -10,9 +10,9 @@
       <td>{{stock.name}}</td>
       <td>{{getPercentageTotalValue(stock)}}%</td>
       <td>{{stock.volumeOfStocks}}</td>
-      <td style="color:red" v-if="stock.purchasePrice > getStockPrice(stock)">⬇</td> <!--  need to replace with api data -->
-      <td style="color:green" v-if="stock.purchasePrice < getStockPrice(stock)">⬆</td>
-      <td v-if="stock.purchasePrice === getStockPrice(stock)">-</td>
+      <td style="color:red" v-if="stock.purchasePrice > getStockPrice(stock)">▼</td> <!--  need to replace with api data -->
+      <td style="color:green" v-if="stock.purchasePrice < getStockPrice(stock)">▲</td>
+      <td v-if="stock.purchasePrice === getStockPrice(stock)">◀︎▶︎</td>
     </tr>
   </table>
 </template>
