@@ -34,7 +34,7 @@ export default {
   name: 'search',
   data () {
     return {
-      selectedStockInput: {},
+      selectedStockInput: null,
       stocksInput: [],
       allSelectedSymbols: [],
       dataItem: [],
