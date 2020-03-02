@@ -1,10 +1,9 @@
 <template lang="html">
-  <div>
-    <!-- <search/>
-    <list-view :stocks="stocks"/>
-    <total-value v-if="stocks" :chartData="chartData" :clientStocks="clientStocks" :stocks="stocks"/> -->
-    <stockChart></stockChart>
-  </div>
+<div class="app">
+
+
+</div>
+
 </template>
 
 <script>
@@ -95,7 +94,5 @@ export default {
     }
 
     </script>
-
->>>>>>> develop
 
     <style lang="css" scoped>
