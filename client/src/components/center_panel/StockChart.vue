@@ -1,5 +1,5 @@
 <template lang="html">
-  <div>
+  <div id='chartFrame'>
     <highcharts class="stock" :constructor-type="stockChart" :options="options"></highcharts>
   </div>
 </template>
@@ -23,7 +23,6 @@ export default {
       fromDate:null,
       toDate:null,
       obtainedData:[],
-      inHolding:[],
       options: {
         rangeSelector: {
           selected: 1
@@ -55,7 +54,7 @@ export default {
     console.log(this.fromDate)
     console.log(this.toDate)
 
-    fetch(`https://financialmodelingprep.com/api/v3/historical-price-full/AAPL?from=${this.fromDate}&to=${this.toDate}`) //obtains stocks with dtae range- ticker to be modified at later date to include interpolation
+    fetch(`https://financialmodelingprep.com/api/v3/historical-price-full/GOOGL?from=${this.fromDate}&to=${this.toDate}`) //obtains stocks with dtae range- ticker to be modified at later date to include interpolation
     .then(res => res.json())
     .then(data =>{this.obtainedData=data["historical"],this.obtainClosePrice()});
 
@@ -112,4 +111,7 @@ export default {
 </script>
 
 <style lang="css" scoped>
+#chartFrame{
+  border: 2px solid blue;
+}
 </style>
