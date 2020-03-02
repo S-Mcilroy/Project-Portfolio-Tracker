@@ -1,9 +1,23 @@
 <template lang="html">
-  <section>
-    <h1>Portfilo Tracker</h1>
-    <p>Most Active Stocks:</p>
-    <marquee v-if="activeStocks" behavior="scroll" direction="left">{{list}}</marquee>
+  <div class="">
+    <section>
+      <h1>Portfilo Tracker</h1>
+      <p>Most Active Stocks:</p>
+
+      <!-- <marquee-text behavior="scroll" direction="left" :repeat="10" :duration="30">{{list}}</marquee-text> -->
+
+      <marquee-text
+      :duration="10"
+      :repeat="3"
+      class="py-2 bg-dark text-white"
+      >
+
+      <span v-for="stock in activeStocks"><span v-bind:class="classObject(stock)">{{parseFloat(stock.changesPercentage.slice(1, -1)).toFixed(2)}}%</span>{{stock.ticker}}</span>
+    </marquee-text>
+
+
   </section>
+</div>
 </template>
 
 <script>
@@ -30,6 +44,15 @@ export default {
         this.list += (stock.ticker + stock.changesPercentage).concat() + " "
       }
 
+    },
+    classObject(stock) {
+      if (parseFloat(stock.changesPercentage.slice(1, -2)) < 0){
+        return "badge badge-danger ml-2"
+      } else if (parseFloat(stock.changesPercentage.slice(1, -2)) > 0) {
+        return "badge badge-success ml-2"
+      } else {
+        return "badge badge-info ml-2"
+      }
     }
   },
   computed: {
@@ -42,7 +65,10 @@ export default {
 </script>
 
 <style lang="css" scoped>
-marquee {
-  width: 30%;
+
+@import'~bootstrap/dist/css/bootstrap.css';
+table code {
+  white-space: nowrap;
 }
+
 </style>

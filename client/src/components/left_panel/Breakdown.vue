@@ -10,8 +10,8 @@
       <td>{{stock.name}}</td>
       <td>{{getPercentageTotalValue(stock)}}%</td>
       <td>{{stock.volumeOfStocks}}</td>
-      <td style="color:red" v-if="stock.purchasePrice > getStockPrice(stock)">▼</td> <!--  need to replace with api data -->
-      <td style="color:green" v-if="stock.purchasePrice < getStockPrice(stock)">▲</td>
+      <td style="color:#DC3546" v-if="stock.purchasePrice > getStockPrice(stock)">▼</td>
+      <td style="color:#28A745" v-if="stock.purchasePrice < getStockPrice(stock)">▲</td>
       <td v-if="stock.purchasePrice === getStockPrice(stock)">◀︎▶︎</td>
     </tr>
   </table>
@@ -34,7 +34,7 @@ export default {
           stockPrice = stock.profile.price
         }
       }
-      return (((currentStock.volumeOfStocks * stockPrice) / this.totalValue)*100).toFixed(0)
+      return (((currentStock.volumeOfStocks * stockPrice) / this.totalValue)*100).toFixed(1)
     },
     getStockPrice(currentStock){
       let stockPrice = 0
@@ -55,6 +55,7 @@ export default {
   }
 }
 </script>
+
 
 <style lang="css" scoped>
 </style>

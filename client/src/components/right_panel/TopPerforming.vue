@@ -2,14 +2,16 @@
 <table style="width:100%">
   <p>Top Performing</p>
   <tr>
-    <th>Ticker Name:</th>
-    <th>Price:</th>
-    <th>Change Percentage:</th>
+    <th>Ticker Name</th>
+    <th id="right">Yesterday's Price ($)</th>
+    <th id="right">Today's Price ($)</th>
+    <th id="right">Change ($)</th>
   </tr>
   <tr v-for="stock in mostGainer">
     <td>{{stock.ticker}}</td>
-    <td>${{stock.price}}</td>
-    <td>{{stock.changesPercentage}}</td>
+    <td id="right">{{parseFloat(stock.price - stock.changes).toFixed(2)}}</td>
+    <td id="right">{{parseFloat(stock.price).toFixed(2)}}</td>
+    <td id="right" style="color:#28A745" v-if="parseFloat(stock.changes).toFixed(2) > 0">{{parseFloat(stock.changes).toFixed(2)}} ▲</td>
   </tr>
 </table>
 </template>
@@ -37,4 +39,8 @@ export default {
 </script>
 
 <style lang="css" scoped>
+#right {
+  text-align:right;
+}
+
 </style>

@@ -1,6 +1,7 @@
 <template lang="html">
 <div>
 
+<marquee-header></marquee-header>
 <section id="Left">
   <total-value :stocks="stocks" :clientStocks="clientStocks" :chartData="chartData"/>
 </section>
@@ -13,6 +14,7 @@
 
   <section id="Right">
 <top-performing/>
+<br><br>
 <bottom-performing/>
   </section>
 
@@ -62,7 +64,7 @@ export default {
         for (const stock of this.stocks){
           for (const clientStock of this.clientStocks)
           if (stock.symbol === clientStock.ticker && !this.chartDataChecker.includes(clientStock.ticker)){
-            this.chartData.push([clientStock.name, stock.profile.price])
+            this.chartData.push([clientStock.name, stock.profile.price*clientStock.volumeOfStocks])
             this.chartDataChecker.push(clientStock.ticker)
           }
         }

@@ -5,6 +5,10 @@ import Highcharts from 'highcharts'
 import stockInit from 'highcharts/modules/stock'
 import VueGoogleCharts from 'vue-google-charts'
 import { AutoCompletePlugin } from "@syncfusion/ej2-vue-dropdowns";
+import MarqueeText from 'vue-marquee-text-component'
+
+Vue.component('marquee-text', MarqueeText)
+
 Vue.use(AutoCompletePlugin);
 
 stockInit(Highcharts)

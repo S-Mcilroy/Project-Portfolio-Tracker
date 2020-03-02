@@ -4,10 +4,11 @@
     <img :src="stock.profile.image">
     <ul>
       <li>Symbol: {{stock.symbol}}</li>
-      <li>Real-time Stock Price: {{stock.profile.price}}</li>
-      <li>Volume: {{stock.profile.volAvg}}</li>
-      <li>Absolute Change: {{stock.profile.changes}}</li>
-      <li>Percentage Change: {{stock.profile.changesPercentage}}</li>
+      <li>Real-time Stock Price: ${{stock.profile.price.toLocaleString()}}</li>
+      <li>Volume: {{parseFloat(stock.profile.volAvg).toLocaleString()}}</li>
+      <li>Absolute Change: ${{stock.profile.changes.toLocaleString()}}</li>
+      <li v-if="parseFloat(stock.profile.changesPercentage.slice(1, -1)) < 0">Percentage Change: <span style="color:#DC3546" >{{parseFloat(stock.profile.changesPercentage.slice(1, -1)).toFixed(2)}}%</span></li>
+      <li v-if="parseFloat(stock.profile.changesPercentage.slice(1, -1)) > 0">Percentage Change: <span style="color:#28A745" >{{parseFloat(stock.profile.changesPercentage.slice(1, -1)).toFixed(2)}}%</span></li>
       <li>Sector: {{stock.profile.sector}}</li>
       <li>Exchange: {{stock.profile.exchange}}</li>
     </ul>
@@ -17,7 +18,10 @@
     <button v-on:click="addToPortfolio" :stock="stock">Add to Portfolio</button>
     <button v-on:click="updatePortfolio" :stock="stock">Update to Portfolio</button>
     <button v-on:click="removeFromPortfolio" :stock="stock" :clientStocks="clientStocks" >Remove from Portfolio</button>
-    <stockChart :stock="stock"/>
+
+    <button v-on:click="showChart" type="button">View Chart</button>
+    <button v-on:click="hideChart" type="button">Hide Chart</button>
+    <stockChart  hidden v-bind:id="classObject(stock)" :stock="stock"/>
     <hr>
 
   </div>
@@ -85,6 +89,20 @@ export default {
         this.clientStockSymbols.push(stock.ticker)
       }
     },
+
+    showChart(){
+      let chartElement = document.getElementById(this.stock.symbol)
+      chartElement.removeAttribute("hidden")
+    },
+
+    hideChart(){
+      let chartElement = document.getElementById(this.stock.symbol)
+      chartElement.setAttribute("hidden", "")
+    },
+
+    classObject(stock){
+      return stock.symbol
+    }
   },
   mounted(){
     this.sortingClientStocks()

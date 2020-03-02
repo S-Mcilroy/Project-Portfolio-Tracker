@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="">
+
     <!-- <form v-on:submit="handleSubmit"  class="" >
     <h2>Type in Stock Symbol</h2>
     <div class="">
@@ -13,16 +13,16 @@
 <hr>
 </form> -->
 <form v-on:submit="handleSubmit"  class="" >
-  <div  style="margin:10% 25%;">
+  <span><div  style="margin:2% 30%;">
     <ejs-autocomplete  :autofill='false' v-model="selectedStockInput" :dataSource='dataItem' :fields='dataFields'
-    placeholder="Select stock..." popupWidth="250px" :highlight="true"
+    placeholder="Select stock..." popupWidth="400px" :highlight="true"
     popupHeight="400px"></ejs-autocomplete>
-  </div>
-
   <input type="submit" name="" value="ADD">
+</div></span>
+  <hr>
 </form>
-<hr>
-</div>
+
+
 </template>
 
 <script>
