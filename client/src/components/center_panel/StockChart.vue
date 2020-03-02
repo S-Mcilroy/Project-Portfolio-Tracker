@@ -49,7 +49,7 @@ export default {
           selected: 1
         },
         title: {
-          text: 'Name of company goes here'
+          text: `${this.stock.profile.companyName}`
         },
         yAxis:{
           title:{
@@ -57,9 +57,11 @@ export default {
           }
         },
         series: [{
-          name: 'Ticker Name here',
+          name: `${this.stock.symbol}`,
           data: [],
-          color: 'white',
+          color: 'white',//dummy data to be replaced
+          // pointStart: Date.UTC(2018, 1, 1),
+          // pointInterval: 1000 * 3600 * 24,
           tooltip: {
             valueDecimals: 2
           }
@@ -72,7 +74,7 @@ export default {
     this.fromDate=this.parseDates(this.yesterYearYear,this.yesterYearMonth,this.yesterYearDate); //converts date to match requirements for interpolation
     this.toDate=this.parseDates(this.yesterYearFull,this.yesterMonth,this.yesterDate);
 
-    fetch(`https://financialmodelingprep.com/api/v3/historical-price-full/AAPL?from=${this.fromDate}&to=${this.toDate}&limit=365`) //obtains stocks with dtae range- ticker to be modified at later date to include interpolation
+    fetch(`https://financialmodelingprep.com/api/v3/historical-price-full/${this.stock.symbol}?from=${this.fromDate}&to=${this.toDate}`) //obtains stocks with dtae range- ticker to be modified at later date to include interpolation
     .then(res => res.json())
     .then(data =>{this.obtainedData=data["historical"],this.obtainClosePrice()});
 
@@ -130,8 +132,7 @@ export default {
       }
     }
   },
-  props: ["lastYear"]
-}
+  props: ["lastYear", "stock"]}
 </script>
 
 <style lang="css" scoped>

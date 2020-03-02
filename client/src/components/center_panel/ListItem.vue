@@ -14,10 +14,11 @@
 
     <label for="amount">Volume:</label>
     <input v-model="amount" type="number" name="amount" value="0" step="1" min="1">
-    <button  v-on:click="addToPortfolio" :stock="stock">Add to Portfolio</button>
+    <button v-on:click="addToPortfolio" :stock="stock">Add to Portfolio</button>
+    <button v-on:click="updatePortfolio" :stock="stock">Update to Portfolio</button>
     <button v-on:click="removeFromPortfolio" :stock="stock" :clientStocks="clientStocks" >Remove from Portfolio</button>
-
-<hr>
+    <stockChart :stock="stock"/>
+    <hr>
 
   </div>
 
@@ -25,9 +26,9 @@
 
 <script>
 
-
+import StockChart from './StockChart.vue';
 import PortfolioService from '../../services/PortfolioService.js';
-// import { eventBus } from '../main';
+import { eventBus } from '../../main';
 
 
 export default {
@@ -35,24 +36,25 @@ export default {
   props: ['stock', 'clientStocks'],
   data(){
     return {
-      amount: null
+      amount: null,
+      clientStockSymbols: []
     }
   },
   methods: {
-  addToPortfolio(e){
-          e.preventDefault()
-          const newStock = {
-            name: this.stock.profile.companyName,
-            ticker: this.stock.symbol,
-            volumeOfStocks: parseInt(this.amount),
-            purchasePrice: this.stock.profile.price
-          };
-          if  (this.amount > 0 && typeof(parseInt(this.amount)) === 'number') {
-            PortfolioService.postStock(newStock)
-          }
-        },
+    addToPortfolio(e){
+      e.preventDefault()
+      const newStock = {
+        name: this.stock.profile.companyName,
+        ticker: this.stock.symbol,
+        volumeOfStocks: parseInt(this.amount),
+        purchasePrice: this.stock.profile.price
+      };
+      if  (this.amount > 0 && typeof(parseInt(this.amount)) === 'number') {
+        PortfolioService.postStock(newStock)
+      }
+    },
 
-  removeFromPortfolio(){
+    removeFromPortfolio(){
 
       for (const clientStock of this.clientStocks){
         if (clientStock.ticker === this.stock.symbol){
@@ -61,11 +63,36 @@ export default {
       }
     },
 
-    }
+    updatePortfolio(e){
+      e.preventDefault()
+      const newStock = {
+        name: this.stock.profile.companyName,
+        ticker: this.stock.symbol,
+        volumeOfStocks: parseInt(this.amount),
+        purchasePrice: this.stock.profile.price
+      };
+      for (const clientStock of this.clientStocks){
+        if (clientStock.ticker === this.stock.symbol){
+          if  (this.amount > 0 && typeof(parseInt(this.amount)) === 'number') {
+            PortfolioService.updateStock(clientStock._id, newStock)
+          }
+        }
+      }
+    },
 
-    }
-
-
+    sortingClientStocks(){
+      for (const stock of this.clientStocks){
+        this.clientStockSymbols.push(stock.ticker)
+      }
+    },
+  },
+  mounted(){
+    this.sortingClientStocks()
+  },
+  components: {
+    "stockChart":StockChart
+  }
+}
 
 </script>
 

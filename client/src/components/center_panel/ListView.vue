@@ -11,10 +11,9 @@ import { eventBus } from '../../main.js';
 
 export default {
 	name: "stocks-list",
-  props: ['stocks', 'clientStocks'],
+	props: ['stocks', 'clientStocks'],
 	data () {
 		return {
-
 		}
 	},
 	components: {
@@ -23,7 +22,7 @@ export default {
 	mounted(){
 	},
 	methods: {
-
+	
 	}
 
 }
