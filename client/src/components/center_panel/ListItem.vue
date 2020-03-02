@@ -1,6 +1,6 @@
 <template lang="html">
-  <div class="stock">
-    <h2>{{stock.profile.companyName}}</h2>
+  <div class="stock" v-if="stock" >
+    <h2 >{{stock.profile.companyName}}</h2>
     <img :src="stock.profile.image">
     <ul>
       <li>Symbol: {{stock.symbol}}</li>
@@ -12,8 +12,11 @@
       <li>Exchange: {{stock.profile.exchange}}</li>
     </ul>
 
-    <button v-on:click="addToPortfolio">Add to Portfolio</button>
-    <!-- <button v-on:click="removeFromPortfolio">Remove from Portfolio</button> -->
+    <label for="amount">Volume:</label>
+    <input v-model="amount" type="number" name="amount" value="0" step="1" min="1">
+    <button  v-on:click="addToPortfolio" :stock="stock">Add to Portfolio</button>
+    <button v-on:click="removeFromPortfolio" :stock="stock" :clientStocks="clientStocks" >Remove from Portfolio</button>
+
 <hr>
 
   </div>
@@ -24,31 +27,45 @@
 
 
 import PortfolioService from '../../services/PortfolioService.js';
-
 // import { eventBus } from '../main';
 
 
 export default {
   name: "list-item",
-  props: ['stock'],
-
+  props: ['stock', 'clientStocks'],
+  data(){
+    return {
+      amount: null
+    }
+  },
   methods: {
   addToPortfolio(e){
           e.preventDefault()
-          const game = {
+          const newStock = {
             name: this.stock.profile.companyName,
             ticker: this.stock.symbol,
-            volumeOfStocks: 44,
+            volumeOfStocks: parseInt(this.amount),
             purchasePrice: this.stock.profile.price
+          };
+          if  (this.amount > 0 && typeof(parseInt(this.amount)) === 'number') {
+            PortfolioService.postStock(newStock)
           }
-          PortfolioService.postStock(game)
         },
 
-  // removeFromPortfolio(){
-  //     PortfolioService.deleteStock(this.stock._id)
+  removeFromPortfolio(){
+
+      for (const clientStock of this.clientStocks){
+        if (clientStock.ticker === this.stock.symbol){
+          PortfolioService.deleteStock(clientStock._id)
+        }
+      }
+    },
 
     }
-  }
+
+    }
+
+
 
 </script>
 
