@@ -1,33 +1,27 @@
 <template lang="html">
   <div class="">
-    <!-- <form v-on:submit="handleSubmit"  class="" >
-    <h2>Type in Stock Symbol</h2>
-    <div class="">
-    <label for="selectedStockInput">Stock Symbol:</label>
-
-    <select v-model="selectedStockInput">
-    <option disabled value="">Select a ticker...</option>
-    <option v-for="stockInput in stocksInput" :value="stockInput">{{stockInput.symbol}} - {{stockInput.name}}</option>
-  </select>
-
+<!-- <form v-on:submit="handleSubmit"  class="" >
+<h2>Type in Stock Symbol</h2>
+<div class="">
+<label for="selectedStockInput">Stock Symbol:</label>
+<select v-model="selectedStockInput">
+<option disabled value="">Select a ticker...</option>
+<option v-for="stockInput in stocksInput" :value="stockInput">{{stockInput.symbol}} - {{stockInput.name}}</option>
+</select>
 </div>
-
 <input type="submit" name="" value="ADD">
 <hr>
-
 </form> -->
 <form v-on:submit="handleSubmit"  class="" >
-<div  style="margin:10% 25%;">
-  <ejs-autocomplete  :autofill='false' v-model="selectedStockInput" :dataSource='dataItem' :fields='dataFields'
-  placeholder="Select stock..." popupWidth="250px" :highlight="true"
-  popupHeight="400px"></ejs-autocomplete>
-</div>
+  <div  style="margin:10% 25%;">
+    <ejs-autocomplete  :autofill='false' v-model="selectedStockInput" :dataSource='dataItem' :fields='dataFields'
+    placeholder="Select stock..." popupWidth="250px" :highlight="true"
+    popupHeight="400px"></ejs-autocomplete>
+  </div>
 
-<input type="submit" name="" value="ADD">
+  <input type="submit" name="" value="ADD">
 </form>
 <hr>
-
-
 </div>
 </template>
 
@@ -45,23 +39,17 @@ export default {
       allSelectedSymbols: [],
       dataItem: [],
       dataFields: {value: 'Stock'}
-
     }
   },
 
-  // https://financialmodelingprep.com/api/v3/quotes/NASDAQ
   mounted(){
     fetch('https://financialmodelingprep.com/api/v3/search?query=&exchange=NASDAQ')
     .then(res => res.json())
     .then(stocksInput => this.stocksInput = stocksInput)
     .then(() => {this.sortStocks("symbol"),this.allAutocompleteSuggestions()});
-
-
   },
 
-
   methods: {
-
     sortStocks: function(property) {
       this.stocksInput.sort((a, b) => {
         return a[property] < b[property] ? -1 : 1;
@@ -83,18 +71,12 @@ export default {
 
     allAutocompleteSuggestions: function() {
       for (const stockInput of this.stocksInput) {
-         this.dataItem.push(`${stockInput.name} #${stockInput.symbol}`)
-        //this.dataItem.push({Id: stockInput.symbol, Stock: `${stockInput.name} - ${stockInput.symbol}`})
-        // this.dataItem.push(stockInput.symbol)
+        this.dataItem.push(`${stockInput.name} #${stockInput.symbol}`)
       }
     }
   }
-
 }
-
 </script>
-
-
 
 
 <style lang="css" scoped>

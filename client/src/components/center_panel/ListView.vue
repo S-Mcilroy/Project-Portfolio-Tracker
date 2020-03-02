@@ -11,31 +11,20 @@ import { eventBus } from '../../main.js';
 
 export default {
 	name: "stocks-list",
-  props: ['stocks'],
+	props: ['stocks'],
 	data () {
-    return {
+		return {
 
-    }
-  },
+		}
+	},
 	components: {
 		'list-item': SelectedStocksListItem
 	},
 	mounted(){
-	// 	PortfiloService.getSightings()
-	// .then(stocks => this.stocks = stocks);
+	},
+	methods: {
 
-	// eventBus.$on('selected-stock-added', (stock) => {
-	// 	this.selectedStocksList.push(stock)
-	// })
-
-	// eventBus.$on('stock-deleted', (id) => {
-	// 	let index = this.stocks.findIndex(stock => stock._id === id)
-	// 	this.stocks.splice(index, 1)
-	// })
-  },
-  methods: {
-
-  }
+	}
 
 }
 </script>
