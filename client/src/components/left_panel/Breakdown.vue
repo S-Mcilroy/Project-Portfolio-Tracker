@@ -7,7 +7,7 @@
       <th>Trend</th>
     </tr>
     <tr v-for="stock in clientStocks">
-      <td>{{stock.ticker}}</td>
+      <td style="padding-left: 3%">{{stock.ticker}}</td>
       <td id="right" >{{getPercentageTotalValue(stock)}}%</td>
       <td id="right" >{{parseFloat(stock.volumeOfStocks).toLocaleString()}}</td>
       <td id="center" style="color:#DC3546" v-if="stock.purchasePrice > getStockPrice(stock)">▼</td>

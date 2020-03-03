@@ -2,7 +2,7 @@
   <div class="">
     <section>
       <h1>Portfilo Tracker</h1>
-      
+
       <marquee-text
       :duration="10"
       :repeat="3"
@@ -68,4 +68,8 @@ table code {
   white-space: nowrap;
 }
 
+h1 {
+  margin-left: 1%;
+  margin-top: 1%;
+}
 </style>
