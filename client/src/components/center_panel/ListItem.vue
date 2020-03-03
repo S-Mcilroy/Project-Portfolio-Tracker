@@ -19,8 +19,7 @@
     <button v-on:click="updatePortfolio" :stock="stock">Update to Portfolio</button>
     <button v-on:click="removeFromPortfolio" :stock="stock" :clientStocks="clientStocks" >Remove from Portfolio</button>
 
-    <button v-on:click="showChart" type="button">View Chart</button>
-    <button v-on:click="hideChart" type="button">Hide Chart</button>
+    <button v-on:click="showChart" type="button">View/Hide Chart</button>
     <stockChart  hidden v-bind:id="classObject(stock)" :lastYear="lastYear" :stock="stock"/>
     <hr>
 
@@ -107,12 +106,11 @@ export default {
 
     showChart(){
       let chartElement = document.getElementById(this.stock.symbol)
-      chartElement.removeAttribute("hidden")
-    },
-
-    hideChart(){
-      let chartElement = document.getElementById(this.stock.symbol)
-      chartElement.setAttribute("hidden", "")
+      if (chartElement.getAttribute("hidden")){
+        chartElement.removeAttribute("hidden")
+      } else {
+        chartElement.setAttribute("hidden", "hidden")
+      }
     },
 
     classObject(stock){
