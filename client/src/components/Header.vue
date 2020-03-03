@@ -2,10 +2,7 @@
   <div class="">
     <section>
       <h1>Portfilo Tracker</h1>
-      <p>Most Active Stocks:</p>
-
-      <!-- <marquee-text behavior="scroll" direction="left" :repeat="10" :duration="30">{{list}}</marquee-text> -->
-
+      
       <marquee-text
       :duration="10"
       :repeat="3"

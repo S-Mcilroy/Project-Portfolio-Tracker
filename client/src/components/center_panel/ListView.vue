@@ -22,7 +22,7 @@ export default {
 	mounted(){
 	},
 	methods: {
-	
+
 	}
 
 }
@@ -39,6 +39,5 @@ h2 {
 	padding: 0;
 	margin: 0;
 }
-
 
 </style>

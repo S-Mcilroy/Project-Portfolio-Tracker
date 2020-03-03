@@ -1,25 +1,24 @@
 <template lang="html">
 
-    <!-- <form v-on:submit="handleSubmit"  class="" >
-    <h2>Type in Stock Symbol</h2>
-    <div class="">
-    <label for="selectedStockInput">Stock Symbol:</label>
-    <select v-model="selectedStockInput">
-    <option disabled value="">Select a ticker...</option>
-    <option v-for="stockInput in stocksInput" :value="stockInput">{{stockInput.symbol}} - {{stockInput.name}}</option>
-  </select>
+  <!-- <form v-on:submit="handleSubmit"  class="" >
+  <h2>Type in Stock Symbol</h2>
+  <div class="">
+  <label for="selectedStockInput">Stock Symbol:</label>
+  <select v-model="selectedStockInput">
+  <option disabled value="">Select a ticker...</option>
+  <option v-for="stockInput in stocksInput" :value="stockInput">{{stockInput.symbol}} - {{stockInput.name}}</option>
+</select>
 </div>
 <input type="submit" name="" value="ADD">
 <hr>
 </form> -->
 <form v-on:submit="handleSubmit"  class="" >
-  <span><div  style="margin:2% 30%;">
-    <ejs-autocomplete  :autofill='false' v-model="selectedStockInput" :dataSource='dataItem' :fields='dataFields'
-    placeholder="Select stock..." popupWidth="400px" :highlight="true"
+  <span><div  style="margin:2% 10%;" id="bar">
+    <ejs-autocomplete :autofill='false' v-model="selectedStockInput" :dataSource='dataItem' :fields='dataFields'
+    placeholder="Select stock..." popupWidth="100%" :highlight="true"
     popupHeight="400px"></ejs-autocomplete>
-  <input type="submit" name="" value="ADD">
-</div></span>
-  <hr>
+    <input type="submit" name="" value="ADD">
+  </div></span>
 </form>
 
 
@@ -93,4 +92,21 @@ export default {
 
 <style lang="css" scoped>
 @import url(https://cdn.syncfusion.com/ej2/material.css);
+
+.ejs-autocomplete {
+  font-size: 30px;
+}
+
+#bar {
+  display: flex;
+}
+
+input {
+  margin-left: 5%;
+  color: white;
+  background: #343A41;
+  border: 1px solid lightgrey;
+}
+
+
 </style>

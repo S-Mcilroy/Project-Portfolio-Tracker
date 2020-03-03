@@ -6,11 +6,15 @@ import Highcharts from 'highcharts'
 import stockInit from 'highcharts/modules/stock'
 import VueGoogleCharts from 'vue-google-charts'
 import { AutoCompletePlugin } from "@syncfusion/ej2-vue-dropdowns";
-import MarqueeText from 'vue-marquee-text-component'
+import MarqueeText from 'vue-marquee-text-component';
+import { SparklinePlugin } from '@syncfusion/ej2-vue-charts';
 
-Vue.component('marquee-text', MarqueeText)
+
+Vue.component('marquee-text', MarqueeText);
 
 Vue.use(AutoCompletePlugin);
+Vue.use(SparklinePlugin);
+
 
 stockInit(Highcharts)
 
