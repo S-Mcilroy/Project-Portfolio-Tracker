@@ -1,5 +1,5 @@
-<template lang="html">
-<table style="width:100%">
+<template lang="html" >
+<table style="width:100%" id="bottom">
   <p>Bottom Performing</p>
   <tr>
     <th>Ticker Name</th>
@@ -42,6 +42,11 @@ export default {
 <style lang="css" scoped>
 #right {
   text-align:right;
+}
+
+#bottom{
+  background-color: #343A41;
+
 }
 
 </style>

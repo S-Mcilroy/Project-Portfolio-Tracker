@@ -1,5 +1,5 @@
 <template lang="html">
-  <table style="width:100%">
+  <table style="width:100%" id="testing">
     <tr>
       <th>Company Name:</th>
       <th>Percentage of Total Value:</th>

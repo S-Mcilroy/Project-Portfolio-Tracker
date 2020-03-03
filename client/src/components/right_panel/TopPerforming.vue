@@ -1,5 +1,5 @@
 <template lang="html">
-<table style="width:100%">
+<table style="width:100%" id="top">
   <p>Top Performing</p>
   <tr>
     <th>Ticker Name</th>
@@ -42,5 +42,10 @@ export default {
 #right {
   text-align:right;
 }
+
+#top{
+  background-color: #343A41;
+}
+
 
 </style>

@@ -129,5 +129,9 @@ export default {
 </script>
 
 <style lang="css" scoped>
-
+.stock{
+  border: 2px solid #28A745;
+  background-color: #343A41;
+  color:white;
+}
 </style>

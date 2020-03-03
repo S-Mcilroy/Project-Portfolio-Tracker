@@ -28,10 +28,29 @@ export default {
       yesterYearDate: null,
       obtainedData:[],
       options: {
+        legend:{
+          enabled:false
+        },
+        xAxis:{
+          visible:false,
+          labels:{
+            style:{
+              textColor:'white'
+            }
+          }
+        },
+        legend:{
+          color:'white'
+        },
         chart:{
           type:'arearange',
           plotBackgroundColor: 'black',
-          plotBorderColor: '#7cfc00',
+          backgroundColor:'#343A41',
+          textColor:'white',
+          style:{
+            color:'white'
+          },
+          plotBorderColor: '#28A745',
           plotBorderWidth: 2,
           zoomType:'xy',
           panning:true,
@@ -49,19 +68,39 @@ export default {
           selected: 1
         },
         title: {
-          text: `${this.stock.profile.companyName}`
+          text: `${this.stock.profile.companyName}`,
+          style:{
+            color:'white',
+            fontWeight: 'bold'
+          }
+        },
+        subtitle:{
+          text:'1 Year Overview',
+          style:{
+            color:'white'
+          }
         },
         yAxis:{
+        labels: {
+            format: '${value}',
+            style:{
+              color:'white'
+            }
+        },
+          gridLineColor: '#197F07',
           title:{
-            text:'Share Price'
+            text:'Share Price',
+            style:{
+              color:'white',
+              fontWeight: 'bold'
+            }
           }
         },
         series: [{
           name: `${this.stock.symbol}`,
           data: [],
-          color: 'white',//dummy data to be replaced
-          // pointStart: Date.UTC(2018, 1, 1),
-          // pointInterval: 1000 * 3600 * 24,
+          showInLegend:false,
+          color: 'white',
           tooltip: {
             valueDecimals: 2
           }
@@ -136,7 +175,14 @@ export default {
 </script>
 
 <style lang="css" scoped>
-#chartFrame{
-  /* border: 2px solid blue; */
+.chartFrame{
+  border: 2px solid #28A745;
+  background-color: #343A41 ;
+}
+tspan{
+  color:white;
+}
+.highcharts-axis.highcharts-color-0 text{
+	fill: #7cb5ec;
 }
 </style>
