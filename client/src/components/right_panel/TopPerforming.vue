@@ -1,46 +1,172 @@
 <template lang="html">
-<table style="width:100%">
-  <p>Top Performing</p>
-  <tr>
-    <th>Ticker Name</th>
-    <th id="right">Yesterday's Price ($)</th>
-    <th id="right">Today's Price ($)</th>
-    <th id="right">Change ($)</th>
-  </tr>
-  <tr v-for="stock in mostGainer">
-    <td>{{stock.ticker}}</td>
-    <td id="right">{{parseFloat(stock.price - stock.changes).toFixed(2)}}</td>
-    <td id="right">{{parseFloat(stock.price).toFixed(2)}}</td>
-    <td id="right" style="color:#28A745" v-if="parseFloat(stock.changes).toFixed(2) > 0">{{parseFloat(stock.changes).toFixed(2)}} ▲</td>
-  </tr>
-</table>
+  <div class="">
+    <table style="width:100%">
+      <p>Top Performing</p>
+      <tr>
+        <th>Ticker Name</th>
+        <!-- <th id="right">Yesterday's Price ($)</th> -->
+        <th id="right">Today's Price ($)</th>
+        <th id="right">Change ($)</th>
+        <th id="center">Trend</th>
+      </tr>
+      <tr v-for="stock in mostGainer">
+        <td>{{stock.ticker}}</td>
+        <!-- <td id="right">{{parseFloat(stock.price - stock.changes).toFixed(2)}}</td> -->
+        <td id="right">{{parseFloat(stock.price).toFixed(2)}}</td>
+        <td id="right" style="color:#28A745" v-if="parseFloat(stock.changes).toFixed(2) > 0">{{parseFloat(stock.changes).toFixed(2)}} ▲</td>
+        <td><ejs-sparkline :id='mostGainer.indexOf(stock)' align="center" :dataSource='dataSource[mostGainer.indexOf(stock)]' fill='#28A745'   :height='height' :width='width'></ejs-sparkline></td>
+      </tr>
+    </table>
+
+
+
+
+  </div>
 </template>
 
 <script>
+import { SparklinePlugin, SparklineTooltip } from "@syncfusion/ej2-vue-charts";
+
 export default {
   name: "top-performing",
   data(){
     return {
-      mostGainer: []
+      mostGainer: [],
+      arrayOfSymbolsOfTopPerf: [],
+      allTops: [],
+      allHistorical: [],
+      allCloseShort: [],
+      allClose: [],
+      b: [],
+      id: [],
+      series: "",
+      allPrices: [],
+      height: '20px',
+      width: '80px',
+      dataSource: []
     }
   },
+  provide: {
+    sparkline:[SparklineTooltip]
+  },
   methods: {
+
+    addToAllHistorical: function() {
+      for (const topPerformer of this.allTops) {
+        this.allHistorical.push(topPerformer.historical)
+      };
+      this.addToAllCloseShort();
+    },
+
+    addToAllCloseShort: function() {
+      for (let array of this.allHistorical) {
+        const shortArray=array.slice(-43)
+        this.allCloseShort.push(shortArray)
+
+      }
+
+      this.addToAllClose();
+    },
+    addToAllClose: function() {
+      for (let array of this.allCloseShort) {
+        for (let object of array) {
+          let a=Object.values(object)
+
+          this.allClose.push(a[1])
+        }
+      }
+      this.split(this.allClose, 43);
+    },
+
+    split: function (arr, n) {
+      var res = [];
+      while (arr.length) {
+        res.push(arr.splice(0, n));
+      }
+      return this.dataSource=res;
+    },
+addToId: function () {
+  for (const stock of this.mostGainer) {
+    this.Id.push(this.mostGainer.indexOf(stock))
+  }
+},
+handleDataSource: function (){
+  for (const stock of this.mostGainer) {
+    return "dataSource["+`${this.mostGainer.indexOf(stock)}`+"]"
+  }
+},
+
+    // for (topPerformer of this.allTops.historical) {
+    //   this.allPrices.push({yval: topPerformer.historical.close})
+    //   }
+    // this.dataSource.push(this.allPrices.slice(-10))
+
+
+    //  for (const price of this.allHistory) {
+    //    this.allPrices.push({yval: price.close})
+    //  };
+    // this.dataSource = this.allPrices.slice(-10)
+
+
+
+    addToArrayOfSymbolsOfTopPerf: function () {
+      for (const topPerformer of this.mostGainer) {
+        this.arrayOfSymbolsOfTopPerf.push(topPerformer.ticker)
+      };
+      this.getTopPerf();
+    },
+
+    getTopPerf: function() {
+
+      const promises = this.arrayOfSymbolsOfTopPerf.map(num => {
+        return fetch(
+          `https://financialmodelingprep.com/api/v3/historical-price-full/${num}?serietype=line`
+        ).then(res => res.json());
+      });
+
+      Promise.all(promises)
+      .then(data => {
+        const topData = data.reduce(
+          (flat, toFlatten) => flat.concat(toFlatten),
+          []
+        );
+        topData.forEach(stock => (stock));
+        this.allTops = topData;
+        this.addToAllHistorical();
+      })
+    }
 
   },
   mounted(){
     fetch('https://financialmodelingprep.com/api/v3/stock/gainers')
     .then(res => res.json())
-    .then(data => this.mostGainer = data["mostGainerStock"])
-  },
-  computed: {
+    .then(data => {this.mostGainer = data["mostGainerStock"],
+    this.addToArrayOfSymbolsOfTopPerf()
+  });
 
-  }
+
+
+
+  // fetch('https://financialmodelingprep.com/api/v3/historical-price-full/AAPL?serietype=line')
+  // .then(res => res.json())
+  // .then(data => {this.allHistory = data.historical,
+  // this.addToHistory2w()});
+
+
+
+},
+computed: {
+
+}
 }
 </script>
 
 <style lang="css" scoped>
 #right {
   text-align:right;
+}
+#center {
+  text-align:center;
 }
 
 </style>
