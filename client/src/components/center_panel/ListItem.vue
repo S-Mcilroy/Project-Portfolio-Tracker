@@ -1,25 +1,32 @@
 <template lang="html">
   <div class="stock" v-if="stock" >
-    <h2 >{{stock.profile.companyName}}</h2>
-    <img :src="stock.profile.image">
+
+    <section id="top-list-view">
+      <h2>{{stock.profile.companyName}}</h2>
+      <img :src="stock.profile.image">
+    </section>
+
+    <div id="buttons">
+      <input v-model="amount" type="number" name="amount" placeholder="Enter amount..." value="0" step="1" min="1">
+      <button v-on:click="addToPortfolio" :stock="stock">Add to Portfolio</button>
+      <button v-on:click="updatePortfolio" :stock="stock">Update to Portfolio</button>
+      <button v-on:click="removeFromPortfolio" :stock="stock" :clientStocks="clientStocks" >Remove from Portfolio</button>
+      <button v-on:click="showChart" type="button">View/Hide Chart</button>
+    </div>
+
+
     <ul>
-      <li>Symbol: {{stock.symbol}}</li>
-      <li>Real-time Stock Price: ${{stock.profile.price.toLocaleString()}}</li>
-      <li>Volume: {{parseFloat(stock.profile.volAvg).toLocaleString()}}</li>
-      <li>Absolute Change: ${{stock.profile.changes.toLocaleString()}}</li>
-      <li v-if="parseFloat(stock.profile.changesPercentage.slice(1, -1)) < 0">Percentage Change: <span style="color:#DC3546" >{{parseFloat(stock.profile.changesPercentage.slice(1, -1)).toFixed(2)}}%</span></li>
-      <li v-if="parseFloat(stock.profile.changesPercentage.slice(1, -1)) > 0">Percentage Change: <span style="color:#28A745" >{{parseFloat(stock.profile.changesPercentage.slice(1, -1)).toFixed(2)}}%</span></li>
-      <li>Sector: {{stock.profile.sector}}</li>
-      <li>Exchange: {{stock.profile.exchange}}</li>
+      <li> <b>Symbol:</b> {{stock.symbol}}</li>
+      <li> <b>Current Price:</b> ${{stock.profile.price.toLocaleString()}}</li>
+      <li> <b>Volume:</b> {{parseFloat(stock.profile.volAvg).toLocaleString()}}</li>
+      <li> <b>Absolute Change:</b> ${{stock.profile.changes.toLocaleString()}}</li>
+      <li v-if="parseFloat(stock.profile.changesPercentage.slice(1, -1)) < 0"><b>Percentage Change:</b> <span style="color:#DC3546" >{{parseFloat(stock.profile.changesPercentage.slice(1, -1)).toFixed(2)}}% ▼</span></li>
+      <li v-if="parseFloat(stock.profile.changesPercentage.slice(1, -1)) > 0"><b>Percentage Change:</b> <span style="color:#28A745" >{{parseFloat(stock.profile.changesPercentage.slice(1, -1)).toFixed(2)}}% ▲</span></li>
+      <li><b>Sector:</b> {{stock.profile.sector}}</li>
+      <li><b>Exchange:</b> {{stock.profile.exchange}}</li>
     </ul>
 
-    <label for="amount">Volume:</label>
-    <input v-model="amount" type="number" name="amount" value="0" step="1" min="1">
-    <button v-on:click="addToPortfolio" :stock="stock">Add to Portfolio</button>
-    <button v-on:click="updatePortfolio" :stock="stock">Update to Portfolio</button>
-    <button v-on:click="removeFromPortfolio" :stock="stock" :clientStocks="clientStocks" >Remove from Portfolio</button>
 
-    <button v-on:click="showChart" type="button">View/Hide Chart</button>
     <stockChart  hidden v-bind:id="classObject(stock)" :lastYear="lastYear" :stock="stock"/>
     <hr>
 
@@ -129,5 +136,52 @@ export default {
 </script>
 
 <style lang="css" scoped>
+
+#top-list-view {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+  margin-left: 2%;
+}
+
+button {
+  color: white;
+  background: #343A41;
+  border: 1px solid lightgrey;
+  width: 25%;
+}
+
+input {
+  background-color: orange;
+  border: dimgray 1px solid;
+  width: 25%;
+}
+
+#buttons {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  flex-flow: column;
+  margin-right: 5%;
+}
+
+ul {
+  margin-top: -25%;
+}
+
+img {
+  height: 80px;
+  width: 80px;
+  margin-bottom: 10px;
+  margin-right: 5.5%;
+}
+
+li {
+  list-style: none;
+}
+
+hr {
+  border: black 1px solid;
+}
 
 </style>

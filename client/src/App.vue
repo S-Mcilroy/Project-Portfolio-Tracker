@@ -1,25 +1,31 @@
 <template lang="html">
-<div>
+  <div>
 
-<marquee-header></marquee-header>
-<section id="Left">
-  <total-value :stocks="stocks" :clientStocks="clientStocks" :chartData="chartData"/>
-</section>
+    <section>
+      <marquee-header></marquee-header>
+    </section>
 
-<section id="Center">
-<search :clientStocks="clientStocks"/>
-<list-view :stocks="stocks" :clientStocks="clientStocks"/>
-</section>
+    <div class="row" id="app">
+
+      <div class="col-md-3" id="total-value">
+        <total-value :stocks="stocks" :clientStocks="clientStocks" :chartData="chartData"/>
+      </div>
 
 
-  <section id="Right">
-<top-performing/>
-<br><br>
-<bottom-performing/>
-  </section>
+      <div class="col-md-6" id="center">
+        <search id="searchbar" :clientStocks="clientStocks"/>
+        <list-view id="list-items" :stocks="stocks" :clientStocks="clientStocks"/>
+      </div>
+
+
+      <div class="col-md-3" id="performing">
+        <top-performing/>
+        <bottom-performing/>
+      </div>
+
+    </div>
 
   </div>
-
 </template>
 
 <script>
@@ -108,6 +114,48 @@ export default {
       }
     }
 
-    </script>
+</script>
 
     <style lang="css" scoped>
+
+    #list-items {
+      overflow: scroll;
+      height: 585px;
+      border: black 1px solid;
+
+    }
+
+    #performing {
+      overflow: scroll;
+      border: black 1px solid;
+      height: 650px;
+
+    }
+
+    #total-value {
+      border: black 1px solid;
+      overflow: scroll;
+      height: 650px;
+
+    }
+
+    #center {
+      border: black 1px solid;
+      padding: 0;
+    }
+
+    #app {
+      padding: 20px;
+    }
+
+    .col-md-3 {
+      padding: 0
+    }
+
+    #searchbar {
+      background-color: orange;
+      padding-top: 0.01%;
+      padding-bottom: 0.01%;
+      align-self: center;
+    }
+    </style>

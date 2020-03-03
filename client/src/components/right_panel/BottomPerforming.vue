@@ -1,19 +1,19 @@
 <template lang="html">
   <div class="">
+    <h4>Bottom Performing</h4>
     <table style="width:100%">
-      <p>Bottom Performing</p>
       <tr>
-        <th>Ticker Name</th>
+        <th>Ticker</th>
         <!-- <th id="right">Yesterday's Price ($)</th> -->
-        <th id="right">Today's Price ($)</th>
+        <th id="right">Price ($)</th>
         <th id="right">Change ($)</th>
         <th id="center">Trend</th>
       </tr>
       <tr v-for="stock in mostLoser">
         <td>{{stock.ticker}}</td>
         <!-- <td id="right">{{parseFloat(stock.price - stock.changes).toFixed(2)}}</td> -->
-        <td id="right">{{parseFloat(stock.price).toFixed(2)}}</td>
-        <td id="right" style="color:#DC3546" v-if="parseFloat(stock.changes).toFixed(2) < 0">{{parseFloat(stock.changes).toFixed(2)}} ▼</td>
+        <td id="right">{{parseFloat(stock.price).toFixed(1)}}</td>
+        <td id="right" style="color:#DC3546" v-if="parseFloat(stock.changes).toFixed(1) < 0">{{parseFloat(stock.changes).toFixed(1)}} ▼</td>
         <td><ejs-sparkline :id='(mostLoser.indexOf(stock))+1000' align="center" :dataSource='dataSource[mostLoser.indexOf(stock)]' fill='#DC3546'   :height='height' :width='width'></ejs-sparkline></td>
       </tr>
     </table>
@@ -85,16 +85,16 @@ export default {
       }
       return this.dataSource=res;
     },
-addToId: function () {
-  for (const stock of this.mostLoser) {
-    this.Id.push(`btm${this.mostLoser.indexOf(stock)}`)
-  }
-},
-handleDataSource: function (){
-  for (const stock of this.mostLoser) {
-    return "dataSource["+`${this.mostLoser.indexOf(stock)}`+"]"
-  }
-},
+    addToId: function () {
+      for (const stock of this.mostLoser) {
+        this.Id.push(`btm${this.mostLoser.indexOf(stock)}`)
+      }
+    },
+    handleDataSource: function (){
+      for (const stock of this.mostLoser) {
+        return "dataSource["+`${this.mostLoser.indexOf(stock)}`+"]"
+      }
+    },
 
     // for (topPerformer of this.allTops.historical) {
     //   this.allPrices.push({yval: topPerformer.historical.close})
@@ -169,5 +169,20 @@ computed: {
   text-align: center;
 }
 
+h4 {
+  display: flex;
+  justify-content: center;
+  background: #FFA500;
+  color: #343A41;
+  width: 100%
+}
+
+table tr:nth-child(even){background-color: #696969;}
+table tr:hover {background-color: #FFA500;}
+table th {
+  background-color: gray;
+  color: white;
+  text-align:center;
+}
 
 </style>
