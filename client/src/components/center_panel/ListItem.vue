@@ -70,7 +70,6 @@ export default {
     },
     addToPortfolio(e){
       e.preventDefault()
-      this.counter = 1
       const newStock = {
         name: this.stock.profile.companyName,
         ticker: this.stock.symbol,
@@ -79,6 +78,7 @@ export default {
       };
       if  (this.amount > 0 && typeof(parseInt(this.amount)) === 'number') {
         PortfolioService.postStock(newStock)
+        this.counter = 1
       }
     },
 
@@ -154,45 +154,45 @@ button {
   width: 25%;
 }
 
- button:hover {background-color: #FFA500;}
+button:hover {background-color: #FFA500;}
 
- button:active {}
+button:active {}
 
-input {
-  background-color: orange;
-  border: dimgray 1px solid;
-  width: 25%;
-}
+  input {
+    background-color: orange;
+    border: dimgray 1px solid;
+    width: 25%;
+  }
 
-#buttons {
-  display: flex;
-  justify-content: flex-end;
-  align-items: flex-end;
-  flex-flow: column;
-  margin-right: 5%;
-}
+  #buttons {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    flex-flow: column;
+    margin-right: 5%;
+  }
 
-ul {
-  margin-top: -25%;
-}
+  ul {
+    margin-top: -25%;
+  }
 
-img {
-  height: 80px;
-  width: 80px;
-  margin-bottom: 10px;
-  margin-right: 5.5%;
-}
+  img {
+    height: 80px;
+    width: 80px;
+    margin-bottom: 10px;
+    margin-right: 5.5%;
+  }
 
-li {
-  list-style: none;
-}
+  li {
+    list-style: none;
+  }
 
-hr {
-  border: black 1px solid;
-}
+  hr {
+    border: black 1px solid;
+  }
 
-h2 {
-  margin-bottom: 10%;
-}
+  h2 {
+    margin-bottom: 10%;
+  }
 
-</style>
+  </style>

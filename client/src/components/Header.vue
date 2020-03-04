@@ -70,6 +70,5 @@ table code {
 
 h1 {
   margin-left: 1%;
-  margin-top: 1%;
 }
 </style>
