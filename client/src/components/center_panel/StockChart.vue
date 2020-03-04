@@ -50,8 +50,8 @@ export default {
           style:{
             color:'white'
           },
-          plotBorderColor: '#28A745',
-          plotBorderWidth: 2,
+          plotBorderColor: 'white',
+          plotBorderWidth: 1,
           zoomType:'xy',
           panning:true,
           panKey:'shift',
@@ -87,7 +87,7 @@ export default {
               color:'white'
             }
         },
-          gridLineColor: '#197F07',
+          gridLineColor: 'white',
           title:{
             text:'Share Price',
             style:{

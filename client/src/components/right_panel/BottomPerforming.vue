@@ -10,7 +10,7 @@
         <th id="center">Trend</th>
       </tr>
       <tr v-for="stock in mostLoser">
-        <td>{{stock.ticker}}</td>
+        <td style="padding-left: 3%">{{stock.ticker}}</td>
         <!-- <td id="right">{{parseFloat(stock.price - stock.changes).toFixed(2)}}</td> -->
         <td id="right">{{parseFloat(stock.price).toFixed(1)}}</td>
         <td id="right" style="color:#DC3546" v-if="parseFloat(stock.changes).toFixed(1) < 0">{{parseFloat(stock.changes).toFixed(1)}} ▼</td>

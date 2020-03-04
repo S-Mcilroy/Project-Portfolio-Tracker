@@ -1,9 +1,9 @@
 <template lang="html">
   <div>
 
-    <section>
-      <marquee-header></marquee-header>
-    </section>
+
+      <marquee-header id="marquee"></marquee-header>
+
 
     <div class="row" id="app">
 
@@ -147,7 +147,7 @@ export default {
     }
 
     #app {
-      padding: 20px;
+      margin: 0.1%;
     }
 
     .col-md-3 {
@@ -160,4 +160,5 @@ export default {
       padding-bottom: 0.01%;
       align-self: center;
     }
+
     </style>

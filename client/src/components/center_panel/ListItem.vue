@@ -153,6 +153,10 @@ button {
   width: 25%;
 }
 
+ button:hover {background-color: #FFA500;}
+
+ button:active {shadow: none;}
+
 input {
   background-color: orange;
   border: dimgray 1px solid;
