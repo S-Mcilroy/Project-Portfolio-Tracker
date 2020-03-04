@@ -12,8 +12,11 @@ MongoClient.connect('mongodb://localhost:27017')
 .then((client) => {
   const db =client.db('portfolio');
   const stocksCollection = db.collection('stocks');
+  const apiCollection = db.collection('api');
   const stocksRouter = createRouter(stocksCollection);
+  const apiRouter = createRouter(apiCollection);
   app.use('/api/stocks', stocksRouter);
+  app.use('/api/api', apiRouter);
 })
 .catch(console.err);
 
