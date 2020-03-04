@@ -24,7 +24,7 @@
       </div>
 
     </div>
-
+    <news-marquee/>
   </div>
 </template>
 
@@ -37,6 +37,7 @@ import BottomPerforming from './components/right_panel/BottomPerforming.vue'
 import Header from './components/Header.vue'
 import PortfolioService from './services/PortfolioService.js';
 import {eventBus} from './main.js';
+import News from './components/News.vue'
 
 export default {
   name: 'app',
@@ -111,6 +112,7 @@ export default {
         "marquee-header": Header,
         "top-performing": TopPerforming,
         "bottom-performing": BottomPerforming,
+        "news-marquee": News
       }
     }
 
