@@ -53,8 +53,8 @@ export default {
 
     addToAllHistorical: function() {
       for (const topPerformer of this.allTops) {
-        this.allHistorical.push(topPerformer.historical)
-      };
+        if (topPerformer !== "{ }" ) {this.allHistorical.push(topPerformer.historical)
+      }};
       this.addToAllCloseShort();
     },
 
