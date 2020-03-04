@@ -22,7 +22,7 @@
       <li> <b>Absolute Change:</b> ${{stock.profile.changes.toLocaleString()}}</li>
       <li v-if="parseFloat(stock.profile.changesPercentage.slice(1, -1)) < 0"><b>Percentage Change:</b> <span style="color:#DC3546" >{{parseFloat(stock.profile.changesPercentage.slice(1, -1)).toFixed(2)}}% ▼</span></li>
       <li v-if="parseFloat(stock.profile.changesPercentage.slice(1, -1)) > 0"><b>Percentage Change:</b> <span style="color:#28A745" >{{parseFloat(stock.profile.changesPercentage.slice(1, -1)).toFixed(2)}}% ▲</span></li>
-      <li v-if="parseFloat(stock.profile.changesPercentage.slice(1, -1)) == 0"><b>Percentage Change:</b> <span style="color:black" >{{parseFloat(stock.profile.changesPercentage.slice(1, -1)).toFixed(2)}}% ◀︎▶︎</span></li>
+      <li v-if="parseFloat(stock.profile.changesPercentage.slice(1, -1)) == 0"><b>Percentage Change:</b> <span style="color:white" >{{parseFloat(stock.profile.changesPercentage.slice(1, -1)).toFixed(2)}}% ◀︎▶︎</span></li>
       <li><b>Sector:</b> {{stock.profile.sector}}</li>
       <li><b>Exchange:</b> {{stock.profile.exchange}}</li>
     </ul>
