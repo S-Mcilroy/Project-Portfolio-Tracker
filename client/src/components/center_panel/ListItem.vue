@@ -28,7 +28,11 @@
     </ul>
 
 
-    <stockChart  hidden v-bind:id="classObject(stock)" :lastYear="lastYear" :stock="stock"/>
+    <section hidden v-bind:id="classObject(stock)">
+      <stockChart :lastYear="lastYear" :stock="stock"/>
+      <p id="description">{{stock.profile.description}}</p>
+    </section>
+
     <hr>
 
   </div>
@@ -193,6 +197,10 @@ button:active {}
 
   h2 {
     margin-bottom: 10%;
+  }
+
+  #description{
+    margin-left: 1%;
   }
 
   </style>
