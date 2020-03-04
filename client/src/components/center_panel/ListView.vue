@@ -40,8 +40,5 @@ h2 {
 	margin: 0;
 }
 
-#list-item {
-
-}
 
 </style>
