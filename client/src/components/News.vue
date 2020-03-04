@@ -5,7 +5,7 @@
   class="py-2 bg-dark text-white"
   >
 
-  <span v-for="article in articles">{{article.title}}🛑</a> </span>
+  <span v-for="article in articles"><a :href="article.url" target='blank'>{{article.title}}🛑</a> </span>
   </marquee-text>
   </template>
 
@@ -26,4 +26,15 @@ export default {
 </script>
 
 <style lang="css" scoped>
+a:visited{
+  color:white;
+}
+
+a:active{
+  color:white;
+}
+
+a:link{
+  color:white;
+}
 </style>

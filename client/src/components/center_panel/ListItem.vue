@@ -8,8 +8,8 @@
 
     <div id="buttons">
       <input v-model="amount" type="number" name="amount" placeholder="Enter amount..." value="0" step="1" min="1">
-      <button v-on:click="addToPortfolio" :stock="stock">Add to Portfolio</button>
-      <button v-on:click="updatePortfolio" :stock="stock">Update to Portfolio</button>
+      <button v-if="!counter >= 1 && !clientStockSymbols.includes(stock.symbol)" v-on:click="addToPortfolio" :stock="stock">Add to Portfolio</button>
+      <button v-on:click="updatePortfolio" :stock="stock">Update Portfolio</button>
       <button v-on:click="removeFromPortfolio" :stock="stock" :clientStocks="clientStocks" >Remove from Portfolio</button>
       <button v-on:click="showChart" type="button">View/Hide Chart</button>
     </div>
@@ -23,7 +23,6 @@
       <li v-if="parseFloat(stock.profile.changesPercentage.slice(1, -1)) < 0"><b>Percentage Change:</b> <span style="color:#DC3546" >{{parseFloat(stock.profile.changesPercentage.slice(1, -1)).toFixed(2)}}% ▼</span></li>
       <li v-if="parseFloat(stock.profile.changesPercentage.slice(1, -1)) > 0"><b>Percentage Change:</b> <span style="color:#28A745" >{{parseFloat(stock.profile.changesPercentage.slice(1, -1)).toFixed(2)}}% ▲</span></li>
       <li v-if="parseFloat(stock.profile.changesPercentage.slice(1, -1)) == 0"><b>Percentage Change:</b> <span style="color:white" >{{parseFloat(stock.profile.changesPercentage.slice(1, -1)).toFixed(2)}}% ◀︎▶︎</span></li>
-
       <li><b>Sector:</b> {{stock.profile.sector}}</li>
       <li><b>Exchange:</b> {{stock.profile.exchange}}</li>
     </ul>
@@ -50,7 +49,8 @@ export default {
     return {
       amount: null,
       clientStockSymbols: [],
-      lastYear: null
+      lastYear: null,
+      counter: 0
     }
   },
   methods: {
@@ -78,6 +78,7 @@ export default {
       };
       if  (this.amount > 0 && typeof(parseInt(this.amount)) === 'number') {
         PortfolioService.postStock(newStock)
+        this.counter = 1
       }
     },
 
@@ -153,41 +154,45 @@ button {
   width: 25%;
 }
 
- button:hover {background-color: #FFA500;}
+button:hover {background-color: #FFA500;}
 
- button:active {shadow: none;}
+button:active {}
 
-input {
-  background-color: orange;
-  border: dimgray 1px solid;
-  width: 25%;
-}
+  input {
+    background-color: orange;
+    border: dimgray 1px solid;
+    width: 25%;
+  }
 
-#buttons {
-  display: flex;
-  justify-content: flex-end;
-  align-items: flex-end;
-  flex-flow: column;
-  margin-right: 5%;
-}
+  #buttons {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    flex-flow: column;
+    margin-right: 5%;
+  }
 
-ul {
-  margin-top: -25%;
-}
+  ul {
+    margin-top: -25%;
+  }
 
-img {
-  height: 80px;
-  width: 80px;
-  margin-bottom: 10px;
-  margin-right: 5.5%;
-}
+  img {
+    height: 80px;
+    width: 80px;
+    margin-bottom: 10px;
+    margin-right: 5.5%;
+  }
 
-li {
-  list-style: none;
-}
+  li {
+    list-style: none;
+  }
 
-hr {
-  border: black 1px solid;
-}
+  hr {
+    border: black 1px solid;
+  }
 
-</style>
+  h2 {
+    margin-bottom: 10%;
+  }
+
+  </style>
