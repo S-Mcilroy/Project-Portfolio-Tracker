@@ -8,8 +8,8 @@
 
     <div id="buttons">
       <input v-model="amount" type="number" name="amount" placeholder="Enter amount..." value="0" step="1" min="1">
-      <button v-on:click="addToPortfolio" :stock="stock">Add to Portfolio</button>
-      <button v-on:click="updatePortfolio" :stock="stock">Update to Portfolio</button>
+      <button v-if="!counter >= 1 && !clientStockSymbols.includes(stock.symbol)" v-on:click="addToPortfolio" :stock="stock">Add to Portfolio</button>
+      <button v-on:click="updatePortfolio" :stock="stock">Update Portfolio</button>
       <button v-on:click="removeFromPortfolio" :stock="stock" :clientStocks="clientStocks" >Remove from Portfolio</button>
       <button v-on:click="showChart" type="button">View/Hide Chart</button>
     </div>
@@ -22,6 +22,7 @@
       <li> <b>Absolute Change:</b> ${{stock.profile.changes.toLocaleString()}}</li>
       <li v-if="parseFloat(stock.profile.changesPercentage.slice(1, -1)) < 0"><b>Percentage Change:</b> <span style="color:#DC3546" >{{parseFloat(stock.profile.changesPercentage.slice(1, -1)).toFixed(2)}}% ▼</span></li>
       <li v-if="parseFloat(stock.profile.changesPercentage.slice(1, -1)) > 0"><b>Percentage Change:</b> <span style="color:#28A745" >{{parseFloat(stock.profile.changesPercentage.slice(1, -1)).toFixed(2)}}% ▲</span></li>
+      <li v-if="parseFloat(stock.profile.changesPercentage.slice(1, -1)) == 0"><b>Percentage Change:</b> <span style="color:black" >{{parseFloat(stock.profile.changesPercentage.slice(1, -1)).toFixed(2)}}% ◀︎▶︎</span></li>
       <li><b>Sector:</b> {{stock.profile.sector}}</li>
       <li><b>Exchange:</b> {{stock.profile.exchange}}</li>
     </ul>
@@ -48,7 +49,8 @@ export default {
     return {
       amount: null,
       clientStockSymbols: [],
-      lastYear: null
+      lastYear: null,
+      counter: 0
     }
   },
   methods: {
@@ -68,6 +70,7 @@ export default {
     },
     addToPortfolio(e){
       e.preventDefault()
+      this.counter = 1
       const newStock = {
         name: this.stock.profile.companyName,
         ticker: this.stock.symbol,
@@ -153,7 +156,7 @@ button {
 
  button:hover {background-color: #FFA500;}
 
- button:active {shadow: none;}
+ button:active {}
 
 input {
   background-color: orange;
@@ -186,6 +189,10 @@ li {
 
 hr {
   border: black 1px solid;
+}
+
+h2 {
+  margin-bottom: 10%;
 }
 
 </style>

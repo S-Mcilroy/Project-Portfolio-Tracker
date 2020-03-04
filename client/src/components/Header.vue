@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="">
     <section>
-      <h1>Portfilo Tracker</h1>
+      <h1>Portfolio Tracker</h1>
 
       <marquee-text
       :duration="10"

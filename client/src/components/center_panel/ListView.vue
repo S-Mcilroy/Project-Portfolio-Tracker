@@ -1,6 +1,6 @@
 <template lang="html">
 	<div id="stocksList">
-		<list-item v-for="(stock, index) in stocks" :keys="index" :stock="stock" :clientStocks="clientStocks" />
+		<list-item id="list-item" v-for="(stock, index) in stocks" :keys="index" :stock="stock" :clientStocks="clientStocks" />
 	</div>
 </template>
 
@@ -38,6 +38,10 @@ export default {
 h2 {
 	padding: 0;
 	margin: 0;
+}
+
+#list-item {
+
 }
 
 </style>

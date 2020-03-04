@@ -3,7 +3,7 @@
     <h3>Your Portfolio</h3>
     <GChart type="PieChart" :data="chartData" :options="chartOptions" id = "chart"/>
     <br>
-    <p>Total Value of Shares: ${{parseFloat(totalValue).toLocaleString()}}.00</p>
+    <p>Total Value of Shares: ${{parseFloat(totalValue).toLocaleString()}}</p>
     <breakdown :totalValue="totalValue" :stocks="stocks" :clientStocks="clientStocks"/>
   </div>
 </template>
