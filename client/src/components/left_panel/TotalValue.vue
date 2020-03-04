@@ -3,7 +3,7 @@
     <h3>Your Portfolio</h3>
     <GChart type="PieChart" :data="chartData" :options="chartOptions" id = "chart"/>
     <br>
-    <p>Total Value of Shares: ${{parseFloat(totalValue).toLocaleString()}}</p>
+    <p class="blinking">Total Value of Shares: ${{parseFloat(totalValue).toLocaleString()}}</p>
     <breakdown :totalValue="totalValue" :stocks="stocks" :clientStocks="clientStocks"/>
   </div>
 </template>
@@ -77,5 +77,16 @@ h3 {
 p {
   display: flex;
   justify-content: center;
+}
+
+.blinking{
+    animation:blinkingText 1.2s infinite;
+}
+@keyframes blinkingText{
+    0%{     color: white;    }
+    49%{    color: white; }
+    60%{    color: transparent; }
+    99%{    color:transparent;  }
+    100%{   color: white;    }
 }
 </style>
