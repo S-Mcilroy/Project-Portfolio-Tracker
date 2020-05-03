@@ -2,7 +2,7 @@
 A group project to create a portfolio tracker in a clear and understanding manor.
 
 ## Image of main display area
-! [Imgur](https://i.imgur.com/Xlbf7KH.jpg)
+![Imgur](https://i.imgur.com/Xlbf7KH.jpg)
 
 ## Image of main display with Highcharts graph drop visible
 ![Imgur](https://i.imgur.com/58nLDkX.jpg?1)
